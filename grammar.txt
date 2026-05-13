@@ -1,0 +1,25 @@
+CREATE statements
+
+
+CREATE TABLE identifier;
+
+or
+
+CREATE TABLE table_name (
+  identifier datatype constraint,
+);
+
+datatype -> int, boolean, varchar(255), text
+
+constraint -> PRIMARY KEY, NOT NULL, DEFAULT, UNIQUE, later FOREIGN KEY,
+
+
+
+
+SELECT statements
+
+
+UPDATE statements
+
+
+DELETE statements

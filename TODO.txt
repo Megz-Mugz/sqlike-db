@@ -1,0 +1,8 @@
+0. define language
+1. Create sql compiler
+    - parser & lexer
+    - typechecking & symbol table
+2. set up docker (project can run on any machine)
+    - x86-64 code gen
+3. networking - create client/server architecture
+4. concurrency - have multiple clients be able to connect to server 
