@@ -1,8 +1,4 @@
-#include <iostream>
 #include "../includes/lexer.hpp"
-
-
-
 
 void Lexer::set_user_query(std::string_view query){
     user_query = query;
@@ -54,7 +50,25 @@ std::optional<Token> Lexer::tokenize_keywords_and_identifiers(){
 }
 
 std::optional<Token> Lexer::tokenize_strings(){
-    return std::nullopt;
+
+    if (user_query[cursor] != QUOTE_CHAR) return std::nullopt;
+
+    // move past opening quote
+    cursor++;
+    size_t start_of_word = cursor;
+
+    while (cursor < user_query.size() && std::isalpha(user_query[cursor])) {
+        cursor++;
+    }
+
+    auto string_lit = user_query.substr(start_of_word, cursor - start_of_word);
+    
+    return Token {
+        TokenType::STRING_LIT_TOK, 
+        string_lit
+    };
+
+
 }
 
 

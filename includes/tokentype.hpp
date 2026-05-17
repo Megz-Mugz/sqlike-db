@@ -15,8 +15,12 @@ enum class TokenType {
     MINUS_TOK, 
     MULTIPLY_TOK, 
     DIVIDE_TOK, 
-    MODULO_TOK
+    MODULO_TOK,
+
+    STRING_LIT_TOK
 };
+
+constexpr char QUOTE_CHAR = '\'';
 
 const std::unordered_map<std::string, TokenType> keywords = {
     {"CREATE", TokenType::CREATE_TOK}, 
