@@ -5,7 +5,7 @@ int main(){
 
     Parser parser;
 
-    if (parser.parse_query("CREATE TABLE Users;")){
+    if (parser.parse_query("    create TABLE Users;")){
         std::println("successfully created table");
     } else {
         std::println("failed :(");

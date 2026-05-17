@@ -8,7 +8,7 @@ SRC := $(wildcard src/*.cpp)
 OBJ := $(patsubst src/%.cpp,$(BUILD_DIR)/%.o,$(SRC))
 DEP := $(OBJ:.o=.d)
 
-.PHONY: all run debug clean
+.PHONY: all run debug debug-run clean
 
 all: $(BUILD_DIR)/$(TARGET)
 
@@ -24,6 +24,9 @@ run: all
 
 debug: CXXFLAGS += -g -O0
 debug: clean all
+
+debug: debug
+	lldb ./$(BUILD_DIR)/$(TARGET)
 
 clean:
 	rm -rf $(BUILD_DIR)
