@@ -1,0 +1,36 @@
+End goal TLDR:
+- client sends query over tcp connection
+- server gets query, parsers and typechecks
+- assuming valid statement, server generates x86 code w/ .s file
+- server links it and executes the machine code
+- server takes the result of the executed code and sends back to client
+- result is then displayed to client
+- keep repeating above steps until client disconnects 
+
+
+
+
+1. Get front end of compiler working (lexer, parser) for 
+create, update, select, and DELETE_TOK
+- while parsing, build out symbol table
+- while parsing, build out AST
+
+2. typecheck to ensure semantic correctness
+
+3. upon successful parse, using the AST, generate x86-64 code for a .s failed
+
+TODO more detailed plan for #3 here
+
+4. execute this .s file accordingly
+
+============== networking stuff ================
+setup Docker here
+
+5. make client/server architecture, client sends request, and server sends response back
+w/ result
+
+============== concurrency stuff ================
+
+make it ACID compliant
+
+TODO more detailed plan here
