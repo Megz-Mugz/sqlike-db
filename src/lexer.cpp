@@ -38,12 +38,21 @@ std::optional<Token> Lexer::tokenize_keywords_and_identifiers(){
         cursor++;
     }
 
-    
     auto word = user_query.substr(start_of_word, cursor - start_of_word);
     std::transform(word.begin(), word.end(), word.begin(), ::toupper);
     
     // TODO you will have to handle situations where the token is 2 words like "PRIMARY KEY"
+    if (word == "PRIMARY" || word == "NOT" || word == "FOREIGN"){
+        skip_whitespace();
+        
+        size_t start_of_second_word = cursor;
 
+        while (cursor < user_query.size() && std::isalpha(user_query[cursor])) {
+            cursor++;
+        }
+        
+        word += " " + user_query.substr(start_of_second_word, cursor - start_of_second_word);
+    }
 
     if (keywords.contains(word)){
         return Token{

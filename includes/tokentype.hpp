@@ -3,7 +3,7 @@
 #include <unordered_map>
 #include <string>
 
-enum class TokenType {
+enum TokenType {
     IDENTIFIER_TOK,
     CREATE_TOK,
     TABLE_TOK, 

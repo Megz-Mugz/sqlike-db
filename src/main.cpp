@@ -7,10 +7,10 @@ int main(){
 
     std::string query = R"(
         create table Persons (
-            PersonID int UNIQUE ,
+            PersonID int PRIMARY KEY ,
             LastName text UNIQUE,
             FirstName text,
-            Address text,
+            Address text NOT NULL,
             City text
         );)";
 

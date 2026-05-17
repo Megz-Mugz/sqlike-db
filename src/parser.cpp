@@ -9,8 +9,7 @@ void Parser::match(const TokenType EXPECTED_TOK){
         std::println("failed on {}", curr_lookahead.text);
         exit(-1);
     } 
-
-    std::println("{}", curr_lookahead.text);
+    std::println("{} -> {}", curr_lookahead.text, static_cast<int>(curr_lookahead.token_type));
     curr_lookahead = lexer.get_next_token();
 }
 
@@ -93,7 +92,7 @@ void Parser::parse_create_statement(){
         match(TokenType::LEFT_PAREN_TOK);
         parse_create_column_statement();
     }
-    
+
     match(TokenType::RIGHT_PAREN_TOK);
     return;
 }
