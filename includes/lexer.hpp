@@ -30,7 +30,7 @@ private:
     // helper functions to tokenize query
 
     void skip_whitespace();
-    std::optional<Token> tokenize_operators();
+    std::optional<Token> tokenize_single_chars();
     std::optional<Token> tokenize_keywords_and_identifiers();
     std::optional<Token> tokenize_strings();
 

@@ -5,7 +5,17 @@ int main(){
 
     Parser parser;
 
-    if (parser.parse_query("    'rohan' CREATE;")){
+    std::string query = R"(
+        create table Persons (
+            PersonID int UNIQUE ,
+            LastName text UNIQUE,
+            FirstName text,
+            Address text,
+            City text
+        );)";
+
+    if (parser.parse_query(query))
+    {
         std::println("successfully created table");
     } else {
         std::println("failed :(");

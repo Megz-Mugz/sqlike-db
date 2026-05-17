@@ -1,22 +1,28 @@
 #include "../includes/lexer.hpp"
 
+#include <string>
+
+
 void Lexer::set_user_query(std::string_view query){
     user_query = query;
 }
 
 void Lexer::skip_whitespace(){
-    while (cursor < user_query.size() && std::isspace(user_query[cursor])){
+    while (cursor < user_query.size() &&
+        (std::isspace(user_query[cursor]) || user_query[cursor] == '\n')){
         cursor++;
     }
 }
 
-std::optional<Token> Lexer::tokenize_operators(){
+std::optional<Token> Lexer::tokenize_single_chars(){
     char current_char = user_query[cursor];
 
-    if (operators.contains(current_char)){
+    auto token_type = single_char_tokens.find(current_char);
+    if (token_type != single_char_tokens.end()){
+        cursor++;
         return Token{
-                    operators.at(user_query[cursor]), 
-                    std::to_string(user_query[cursor])
+                    token_type->second,
+                    std::string(1, current_char)
                 };
     }
     return std::nullopt;
@@ -28,12 +34,16 @@ std::optional<Token> Lexer::tokenize_keywords_and_identifiers(){
         
     size_t start_of_word = cursor;
     
-    while (cursor < user_query.size() && !std::isspace(user_query[cursor])) {
+    while (cursor < user_query.size() && std::isalpha(user_query[cursor])) {
         cursor++;
     }
 
+    
     auto word = user_query.substr(start_of_word, cursor - start_of_word);
     std::transform(word.begin(), word.end(), word.begin(), ::toupper);
+    
+    // TODO you will have to handle situations where the token is 2 words like "PRIMARY KEY"
+
 
     if (keywords.contains(word)){
         return Token{
@@ -80,8 +90,8 @@ Token Lexer::get_next_token(){
     // skip white space & new lines
     skip_whitespace();
 
-    // find operators (+ - * / %)
-    if (auto next_token = tokenize_operators()){
+    // find single chars like +, -, and (
+    if (auto next_token = tokenize_single_chars()){
         return *next_token;
     }
 
@@ -95,5 +105,6 @@ Token Lexer::get_next_token(){
         return *next_token;
     }
 
+    
     return Token{TokenType::IDENTIFIER_TOK, ""};
 };
