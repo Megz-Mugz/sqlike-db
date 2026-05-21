@@ -9,6 +9,7 @@ void Parser::match(const TokenType EXPECTED_TOK){
         std::println("failed on {}", curr_lookahead.text);
         exit(-1);
     } 
+    // TODO quick line just to test tokenization
     std::println("{} -> {}", curr_lookahead.text, static_cast<int>(curr_lookahead.token_type));
     curr_lookahead = lexer.get_next_token();
 }
@@ -76,7 +77,7 @@ void Parser::parse_create_column_statement(){
         match(TokenType::COMMA_TOK);
         parse_create_column_statement();
     } else if (curr_lookahead.token_type == TokenType::RIGHT_PAREN_TOK){
-        return;
+        match(TokenType::RIGHT_PAREN_TOK);
     } else {
         // TODO better error handling
         exit(-1);
@@ -84,6 +85,10 @@ void Parser::parse_create_column_statement(){
 }
 
 void Parser::parse_create_statement(){
+    // TODO prior to beginning parsing, initialize the type of AST 
+    // that this of parser will work with
+
+    
     match(TokenType::CREATE_TOK);
     match(TokenType::TABLE_TOK);
     match(TokenType::IDENTIFIER_TOK);
@@ -92,8 +97,8 @@ void Parser::parse_create_statement(){
         match(TokenType::LEFT_PAREN_TOK);
         parse_create_column_statement();
     }
-
-    match(TokenType::RIGHT_PAREN_TOK);
+    // TODO lookahead for end of line, if no end of line, throw error
+    
     return;
 }
 

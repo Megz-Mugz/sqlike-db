@@ -11,10 +11,10 @@ CREATE TABLE table_name (
 
 datatype -> int, boolean, text
 
-constraint -> PRIMARY KEY, NOT NULL, DEFAULT, UNIQUE, later FOREIGN KEY,
+constraint -> PRIMARY KEY, NOT NULL, DEFAULT, UNIQUE, FOREIGN KEY,
 
-
-
+- note, for purposes of this db, "DEFAULT" will make ints 0, 
+booleans false, and text an empty string
 
 SELECT statements
 
