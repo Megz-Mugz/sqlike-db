@@ -11,9 +11,30 @@ End goal TLDR:
 
 
 1. Get front end of compiler working (lexer, parser) for 
-create, update, select, and DELETE_TOK
+create, insert, update, select, and delete
 - while parsing, build out symbol table
 - while parsing, build out AST
+
+CREATE
+
+- supports creating a table with and without columns
+- 3 supported datatypes include int, boolean, and text
+- 5 constraints include 
+        "Primary Key", 
+        "NOT NULL", 
+        "DEFAULT", 
+        "FOREIGN KEY"
+- for default, boolean will default to false, int will be 0, and 
+text will be empty string
+- 
+
+INSERT
+
+UPDATE
+
+DELETE
+
+SELECT
 
 2. typecheck to ensure semantic correctness
 

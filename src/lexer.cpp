@@ -5,6 +5,7 @@
 
 void Lexer::set_user_query(std::string_view query){
     user_query = query;
+    cursor = 0;
 }
 
 void Lexer::skip_whitespace(){

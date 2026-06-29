@@ -6,14 +6,18 @@ void Parser::match(const TokenType EXPECTED_TOK){
     
     if (curr_lookahead.token_type != EXPECTED_TOK){
         // TODO show proper error
-        std::println("failed on {}", curr_lookahead.text);
+        // std::println("failed on {}", curr_lookahead.text);
         exit(-1);
     } 
     // TODO quick line just to test tokenization
-    std::println("{} -> {}", curr_lookahead.text, static_cast<int>(curr_lookahead.token_type));
+    // std::println("{} -> {}", curr_lookahead.text, static_cast<int>(curr_lookahead.token_type));
     curr_lookahead = lexer.get_next_token();
 }
 
+/*
+    Parses column constraints that will be might optionally 
+    be present after the column's datatype
+*/
 void Parser::parse_column_constraint(){
     switch(curr_lookahead.token_type){
         case TokenType::PRIMARY_KEY_CONSTRAINT_TOK:
@@ -23,7 +27,9 @@ void Parser::parse_column_constraint(){
         case TokenType::NOT_NULL_CONSTRAINT_TOK:
             match(TokenType::NOT_NULL_CONSTRAINT_TOK);
             break;
-
+        
+        // TODO will be handled later in code, but these are the defaults
+        // for the following datatypes int -> 0, text -> "", boolean -> false
         case TokenType::DEFAULT_CONSTRAINT_TOK:
             match(TokenType::DEFAULT_CONSTRAINT_TOK);
             break;
@@ -42,11 +48,15 @@ void Parser::parse_column_constraint(){
         
         default:
             // TODO better error handling
-            std::println("failed on {}", curr_lookahead.text);
+            // std::println("failed on {}", curr_lookahead.text);
             exit(-1);
     }
 }
 
+/*
+    Parses for the datatype of the column, 
+    which can either be an integer, boolean, or TEXT
+*/
 void Parser::parse_column_datatype(){
     switch(curr_lookahead.token_type){
         case TokenType::INT_TOK:
@@ -131,6 +141,5 @@ bool Parser::parse_query(std::string_view query){
             break;
     }
     
-    std::println("successfully parsed query!");
     return true;
 }
