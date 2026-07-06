@@ -118,28 +118,33 @@ bool Parser::parse_query(std::string_view query){
 
     // set initial current lookahead
     curr_lookahead = lexer.get_next_token();
+    bool successful_parse = false;
 
     switch (curr_lookahead.token_type){
 
         case TokenType::CREATE_TOK:
             parse_create_statement();
+            successful_parse = true;
             break;
         
         case TokenType::UPDATE_TOK:
             // parse_update_statement();
+            successful_parse = true;
             break;
 
         case TokenType::SELECT_TOK:
             // parse_select_statement();
+            successful_parse = true;
             break;
 
         case TokenType::DELETE_TOK:
             // parse_delete_statement();
+            successful_parse = true;
             break;
 
         default:
             break;
     }
     
-    return true;
+    return successful_parse;
 }
