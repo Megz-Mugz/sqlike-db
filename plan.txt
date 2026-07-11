@@ -43,9 +43,13 @@ Make it so it can handle inserting integer, boolean, and string literals
 
 UPDATE
 
+SELECT
+
 DELETE
 
-SELECT
+DROP
+
+
 
 2. typecheck to ensure semantic correctness
 
