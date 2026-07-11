@@ -33,12 +33,27 @@ TEST(InsertStatementTest, ParsesInsertWithoutSemicolon) {
             )"));
 }
 
+TEST(InsertStatementTest, ParsesMixedCaseInsertKeywords) {
+    Parser parser;
+
+    EXPECT_TRUE(parser.parse_query("Insert Into Users Values (1, 2, 3)"));
+}
+
 TEST(InsertStatementTest, ParsesInsertWithBooleanLiteral) {
     Parser parser;
 
     EXPECT_TRUE(parser.parse_query(R"(
             INSERT INTO Student (ID, NAME, ACTIVE)
-            VALUES (1, 'Liam', 'true');
+            VALUES (1, 'Liam', true);
+            )"));
+}
+
+TEST(InsertStatementTest, ParsesInsertWithMixedCaseBooleanLiteral) {
+    Parser parser;
+
+    EXPECT_TRUE(parser.parse_query(R"(
+            INSERT INTO Student (ID, NAME, ACTIVE)
+            VALUES (2, 'Sophia', False);
             )"));
 }
 

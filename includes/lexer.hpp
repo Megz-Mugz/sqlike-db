@@ -35,7 +35,8 @@ private:
     std::optional<Token> tokenize_literals();
 
     std::optional<Token> tokenize_integer_literal();
-    std::optional<Token> tokenize_boolean_or_string_literal();
+    std::optional<Token> tokenize_boolean_literal();
+    std::optional<Token> tokenize_string_literal();
 
 
 

@@ -57,7 +57,17 @@ std::optional<Token> Lexer::tokenize_keywords_and_identifiers(){
             cursor++;
         }
         
-        word += " " + user_query.substr(start_of_second_word, cursor - start_of_second_word);
+        auto second_word = user_query.substr(start_of_second_word, cursor - start_of_second_word);
+        std::transform(
+            second_word.begin(),
+            second_word.end(),
+            second_word.begin(),
+            [](unsigned char c) {
+                return std::toupper(c);
+            }
+        );
+
+        word += " " + second_word;
     }
 
     if (keywords.contains(word)){
@@ -81,7 +91,8 @@ std::optional<Token> Lexer::tokenize_integer_literal(){
 
     std::string number_as_str;
 
-    while (std::isdigit(static_cast<unsigned char>(user_query[cursor]))){
+    while (cursor < user_query.size() &&
+        std::isdigit(static_cast<unsigned char>(user_query[cursor]))){
         number_as_str += user_query[cursor];
         cursor++;
     }
@@ -92,7 +103,44 @@ std::optional<Token> Lexer::tokenize_integer_literal(){
     );
 }
 
-std::optional<Token> Lexer::tokenize_boolean_or_string_literal(){
+std::optional<Token> Lexer::tokenize_boolean_literal(){
+    if (!std::isalpha(static_cast<unsigned char>(user_query[cursor]))){
+        return std::nullopt;
+    }
+
+    size_t end_of_word = cursor;
+
+    while (end_of_word < user_query.size() &&
+        (std::isalnum(static_cast<unsigned char>(user_query[end_of_word])) ||
+        user_query[end_of_word] == '_')) {
+        end_of_word++;
+    }
+
+    auto word = user_query.substr(cursor, end_of_word - cursor);
+    auto upper_word = word;
+
+    std::transform(
+        upper_word.begin(),
+        upper_word.end(),
+        upper_word.begin(),
+        [](unsigned char c) {
+            return std::toupper(c);
+        }
+    );
+
+    if (!boolean_key_words.contains(upper_word)){
+        return std::nullopt;
+    }
+
+    cursor = end_of_word;
+
+    return Token {
+        TokenType::BOOL_LIT_TOK,
+        word
+    };
+}
+
+std::optional<Token> Lexer::tokenize_string_literal(){
     if (user_query[cursor] != QUOTE_CHAR) return std::nullopt;
 
     // move past opening quote
@@ -112,24 +160,6 @@ std::optional<Token> Lexer::tokenize_boolean_or_string_literal(){
     // move past closing quote
     cursor++;
 
-    auto upper_string_lit = string_lit;
-
-    std::transform(
-        upper_string_lit.begin(), 
-        upper_string_lit.end(), 
-        upper_string_lit.begin(), 
-        [](unsigned char c) {
-            return std::toupper(c);
-        }
-    );
-
-    if (boolean_key_words.contains(upper_string_lit)){
-        return Token {
-            TokenType::BOOL_LIT_TOK, 
-            string_lit
-        };
-    }
-    
     return Token {
         TokenType::STRING_LIT_TOK, 
         string_lit
@@ -150,7 +180,11 @@ std::optional<Token> Lexer::tokenize_literals(){
         return *literal_token;
     }
 
-    if (auto literal_token = tokenize_boolean_or_string_literal()){
+    if (auto literal_token = tokenize_boolean_literal()){
+        return *literal_token;
+    }
+
+    if (auto literal_token = tokenize_string_literal()){
         return *literal_token;
     }
 
@@ -174,13 +208,13 @@ Token Lexer::get_next_token(){
         return *next_token;
     }
 
-    // keywords, identifiers
-    if (auto next_token = tokenize_keywords_and_identifiers()){
+    // tokenizes integer, boolean, and string literals
+    if (auto next_token = tokenize_literals()){
         return *next_token;
     }
 
-    // tokenizes strings
-    if (auto next_token = tokenize_literals()){
+    // keywords, identifiers
+    if (auto next_token = tokenize_keywords_and_identifiers()){
         return *next_token;
     }
 
