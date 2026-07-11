@@ -26,9 +26,20 @@ CREATE
         "FOREIGN KEY"
 - for default, boolean will default to false, int will be 0, and 
 text will be empty string
-- 
 
 INSERT
+
+INSERT INTO Student (ROLL_NO, NAME, ADDRESS, PHONE, AGE) 
+VALUES
+(7, 'Mateo Garcia', 'Madrid', 'xxxxxxxxxx', 15),
+(8, 'Hana Suzuki', 'Osaka', 'xxxxxxxxxx', 18),
+(9, 'Oliver Jensen', 'Copenhagen', 'xxxxxxxxxx', 17),
+(10, 'Amelia Brown', 'London', 'xxxxxxxxxx', 17);
+
+In general, my insert statement will be able to work for strings such as the above
+& will also work even if you don't specify column names. 
+
+Make it so it can handle inserting integer, boolean, and string literals
 
 UPDATE
 
