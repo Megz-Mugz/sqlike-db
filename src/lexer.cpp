@@ -1,4 +1,4 @@
-#include "../includes/lexer.hpp"
+#include "lexer.hpp"
 
 #include <string>
 

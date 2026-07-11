@@ -3,13 +3,11 @@
 #include <string_view>
 #include <stdbool.h>
 
-#include "../includes/lexer.hpp"
+#include "lexer.hpp"
 
 class Parser 
 {
 public:
-
-    // Parser() = delete;
 
     bool parse_query(std::string_view query);
 
@@ -25,5 +23,7 @@ private:
     void parse_create_statement();
 
     void parse_create_column_statement();
+
+    // CreateStatement create_statement;
 
 };

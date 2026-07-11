@@ -1,6 +1,6 @@
 #include <iostream>
 #include <stdbool.h>
-#include "../includes/parser.hpp"
+#include "parser.hpp"
 
 int main(){
 

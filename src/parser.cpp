@@ -1,6 +1,6 @@
-#include "../includes/lexer.hpp"
-#include "../includes/parser.hpp"
-#include "../includes/tokentype.hpp"
+#include "lexer.hpp"
+#include "parser.hpp"
+#include "tokentype.hpp"
 
 void Parser::match(const TokenType EXPECTED_TOK){
     

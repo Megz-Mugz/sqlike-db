@@ -36,6 +36,8 @@ $(BUILD_DIR)/$(TEST_TARGET): $(TEST_APP_OBJ) $(TEST_OBJ)
 run: all
 	./$(BUILD_DIR)/$(TARGET)
 
+r: run
+
 test: $(BUILD_DIR)/$(TEST_TARGET)
 	./$(BUILD_DIR)/$(TEST_TARGET)
 
