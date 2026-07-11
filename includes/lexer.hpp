@@ -32,7 +32,10 @@ private:
     void skip_whitespace();
     std::optional<Token> tokenize_single_chars();
     std::optional<Token> tokenize_keywords_and_identifiers();
-    std::optional<Token> tokenize_strings();
+    std::optional<Token> tokenize_literals();
+
+    std::optional<Token> tokenize_integer_literal();
+    std::optional<Token> tokenize_boolean_or_string_literal();
 
 
 

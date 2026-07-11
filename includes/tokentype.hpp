@@ -2,6 +2,7 @@
 
 #include <unordered_map>
 #include <string>
+#include <unordered_set>
 
 enum TokenType {
     IDENTIFIER_TOK,
@@ -11,14 +12,21 @@ enum TokenType {
     SELECT_TOK, 
     DELETE_TOK, 
 
+    INSERT_INTO_TOK,
+    VALUES_TOK,
+
     PLUS_TOK, 
     MINUS_TOK, 
     MULTIPLY_TOK, 
     DIVIDE_TOK, 
     MODULO_TOK,
 
+    INT_LIT_TOK, 
+    BOOL_LIT_TOK, 
+
     STRING_LIT_TOK, 
     COMMA_TOK,
+    SEMICOLON_TOK,
     LEFT_PAREN_TOK, 
     RIGHT_PAREN_TOK, 
 
@@ -26,12 +34,14 @@ enum TokenType {
     BOOLEAN_TOK,
     TEXT_TOK,
 
+
     // constraint toks
     PRIMARY_KEY_CONSTRAINT_TOK,
     NOT_NULL_CONSTRAINT_TOK,
     DEFAULT_CONSTRAINT_TOK,
     UNIQUE_CONSTRAINT_TOK,
-    FOREIGN_KEY_CONSTRAINT_TOK
+    FOREIGN_KEY_CONSTRAINT_TOK,
+    END_OF_QUERY_TOK
 };
 
 constexpr char QUOTE_CHAR = '\'';
@@ -43,16 +53,34 @@ const std::unordered_map<std::string, TokenType> keywords = {
     {"BOOLEAN", TokenType::BOOLEAN_TOK}, 
     {"TEXT", TokenType::TEXT_TOK},
 
+    // Compound keywords
     {"PRIMARY KEY", TokenType::PRIMARY_KEY_CONSTRAINT_TOK},
     {"NOT NULL", TokenType::NOT_NULL_CONSTRAINT_TOK},
+    {"FOREIGN KEY", TokenType::FOREIGN_KEY_CONSTRAINT_TOK},
+    {"INSERT INTO", TokenType::INSERT_INTO_TOK},
+
     {"DEFAULT", TokenType::DEFAULT_CONSTRAINT_TOK},
     {"UNIQUE", TokenType::UNIQUE_CONSTRAINT_TOK},
-    {"FOREIGN KEY", TokenType::FOREIGN_KEY_CONSTRAINT_TOK}
 
+    {"VALUES", TokenType::VALUES_TOK}
+
+};
+
+const std::unordered_set<std::string> boolean_key_words = {
+    "TRUE", 
+    "FALSE"
+};
+
+const std::unordered_set<std::string> first_word_of_compound_keyword = {
+    "PRIMARY", 
+    "NOT", 
+    "FOREIGN", 
+    "INSERT"
 };
 
 const std::unordered_map<char, TokenType> single_char_tokens = {
     {',', TokenType::COMMA_TOK},
+    {';', TokenType::SEMICOLON_TOK},
     {'+', TokenType::PLUS_TOK},
     {'(', TokenType::LEFT_PAREN_TOK},
     {')', TokenType::RIGHT_PAREN_TOK}

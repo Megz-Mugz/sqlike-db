@@ -1,7 +1,0 @@
-class CreateStatement
-{
-public:
-    
-private:
-
-}
