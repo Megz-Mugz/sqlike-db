@@ -44,11 +44,12 @@ std::optional<Token> Lexer::tokenize_keywords_and_identifiers(){
         cursor++;
     }
 
-    auto word = user_query.substr(start_of_word, cursor - start_of_word);
-    std::transform(word.begin(), word.end(), word.begin(), ::toupper);
+    auto original_word = user_query.substr(start_of_word, cursor - start_of_word);
+    auto uppercase_word = original_word;
+    std::transform(uppercase_word.begin(), uppercase_word.end(), uppercase_word.begin(), ::toupper);
     
     // TODO you will have to handle situations where the token is 2 words like "PRIMARY KEY"
-    if (first_word_of_compound_keyword.contains(word)){
+    if (first_word_of_compound_keyword.contains(uppercase_word)){
         skip_whitespace();
         
         size_t start_of_second_word = cursor;
@@ -67,19 +68,19 @@ std::optional<Token> Lexer::tokenize_keywords_and_identifiers(){
             }
         );
 
-        word += " " + second_word;
+        uppercase_word += " " + second_word;
     }
 
-    if (keywords.contains(word)){
+    if (keywords.contains(uppercase_word)){
         return Token{
-            keywords.at(word),
-            word
+            keywords.at(uppercase_word),
+            uppercase_word
         };
     }
 
     return Token{
         TokenType::IDENTIFIER_TOK,
-        word
+        original_word
     };
     
 }

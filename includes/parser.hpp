@@ -30,15 +30,16 @@ private:
     void parse_columns_to_insert_into();
     void parse_actual_value();
 
-
     // functions for parsing "update" statements
     void parse_update_statement();
     void parse_columns_to_update();
     void parse_where_condition();
 
-
-
     // functions for parsing "select" statements
+    void parse_select_statement();
+    void parse_select_columns();
+    void parse_join_condition();
+    void parse_column_reference();
 
     // functions for parsing "delete" statements
 

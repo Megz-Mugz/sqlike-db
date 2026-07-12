@@ -22,8 +22,10 @@ int main(){
     // }
 
     query = R"(
-            UPDATE Student
-            SET Name = 'Alfred Schmidt', City= 29292, Admin  = False
+            Select *, Users.weight
+            From Users
+            Join Admins
+            On Users.id = Admins.user_id
             WHERE id = 1)";
 
     std::println("Query is: {}", query);

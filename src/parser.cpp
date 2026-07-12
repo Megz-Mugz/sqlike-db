@@ -56,7 +56,7 @@ bool Parser::parse_query(std::string_view query){
             break;
 
         case TokenType::SELECT_TOK:
-            // parse_select_statement();
+            parse_select_statement();
             successful_parse = true;
             break;
 

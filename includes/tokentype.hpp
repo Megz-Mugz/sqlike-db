@@ -31,6 +31,11 @@ enum TokenType {
     EQUAL_TOK,
     WHERE_TOK,
     SET_TOK,
+    STAR_TOK,
+    FROM_TOK,
+    JOIN_TOK,
+    ON_TOK,
+    DOT_TOK,
 
 
     // constraint toks
@@ -64,7 +69,13 @@ const std::unordered_map<std::string, TokenType> keywords = {
     {"UPDATE", TokenType::UPDATE_TOK}, 
     
     {"WHERE", TokenType::WHERE_TOK}, 
-    {"SET", TokenType::SET_TOK}
+    {"SET", TokenType::SET_TOK},
+    {"FROM", TokenType::FROM_TOK},
+    {"SELECT", TokenType::SELECT_TOK},
+    {"JOIN", TokenType::JOIN_TOK},
+    {"ON", TokenType::ON_TOK},
+
+
     
 
 };
@@ -85,7 +96,9 @@ const std::unordered_map<char, TokenType> single_char_tokens = {
     {',', TokenType::COMMA_TOK},
     {';', TokenType::SEMICOLON_TOK},
     {'+', TokenType::PLUS_TOK},
+    {'*', TokenType::STAR_TOK},
     {'(', TokenType::LEFT_PAREN_TOK},
     {')', TokenType::RIGHT_PAREN_TOK}, 
-    {'=', TokenType::EQUAL_TOK}
+    {'=', TokenType::EQUAL_TOK},
+    {'.', TokenType::DOT_TOK}
 };
