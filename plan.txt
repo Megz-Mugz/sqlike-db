@@ -43,6 +43,10 @@ Make it so it can handle inserting integer, boolean, and string literals
 
 UPDATE
 
+UPDATE table_name
+SET col_name = 'Alfred Schmidt', col_name= 'Frankfurt'
+WHERE col_name = 1;
+
 SELECT
 
 DELETE

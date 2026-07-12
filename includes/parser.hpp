@@ -32,6 +32,11 @@ private:
 
 
     // functions for parsing "update" statements
+    void parse_update_statement();
+    void parse_columns_to_update();
+    void parse_where_condition();
+
+
 
     // functions for parsing "select" statements
 
