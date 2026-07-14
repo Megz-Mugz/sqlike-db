@@ -42,8 +42,9 @@ private:
     void parse_column_reference();
 
     // functions for parsing "delete" statements
+    void parse_delete_statement();
 
     // functions for parsing "drop statements"
-
+    void parse_drop_statement();
     
 };

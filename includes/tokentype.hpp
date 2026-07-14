@@ -36,6 +36,9 @@ enum TokenType {
     JOIN_TOK,
     ON_TOK,
     DOT_TOK,
+    IF_TOK,
+    EXISTS_TOK,
+    DROP_TOK,
 
 
     // constraint toks
@@ -62,6 +65,7 @@ const std::unordered_map<std::string, TokenType> keywords = {
     {"FOREIGN KEY", TokenType::FOREIGN_KEY_CONSTRAINT_TOK},
     {"INSERT INTO", TokenType::INSERT_INTO_TOK},
 
+    
     {"DEFAULT", TokenType::DEFAULT_CONSTRAINT_TOK},
     {"UNIQUE", TokenType::UNIQUE_CONSTRAINT_TOK},
 
@@ -74,10 +78,12 @@ const std::unordered_map<std::string, TokenType> keywords = {
     {"SELECT", TokenType::SELECT_TOK},
     {"JOIN", TokenType::JOIN_TOK},
     {"ON", TokenType::ON_TOK},
-
-
     
-
+    {"DELETE", TokenType::DELETE_TOK},
+    {"DROP", TokenType::DROP_TOK},
+    {"IF", TokenType::IF_TOK},
+    {"EXISTS", TokenType::EXISTS_TOK}
+    
 };
 
 const std::unordered_set<std::string> boolean_key_words = {

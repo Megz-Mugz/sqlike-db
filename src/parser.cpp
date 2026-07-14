@@ -61,7 +61,11 @@ bool Parser::parse_query(std::string_view query){
             break;
 
         case TokenType::DELETE_TOK:
-            // parse_delete_statement();
+            parse_delete_statement();
+            successful_parse = true;
+            break;
+        case TokenType::DROP_TOK:
+            parse_drop_statement();
             successful_parse = true;
             break;
 
