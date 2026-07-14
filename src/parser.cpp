@@ -69,7 +69,7 @@ bool Parser::parse_query(std::string_view query){
             successful_parse = true;
             break;
 
-        default:
+    default:
             break;
     }
 

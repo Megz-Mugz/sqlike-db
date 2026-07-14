@@ -66,11 +66,23 @@ ON table1.common_column = table2.common_column;
 
 DELETE
 
+handle cases like this:
+DELETE FROM table_name WHERE condition;
+
+and without where
+
 DROP
 
+handle cases like this:
+DROP TABLE IF EXISTS table_name;
+
+also be able to handle without IF EXISTS like this:
+DROP TABLE table_name;
 
 
 2. typecheck to ensure semantic correctness
+
+build symbol table!
 
 3. upon successful parse, using the AST, generate x86-64 code for a .s failed
 
