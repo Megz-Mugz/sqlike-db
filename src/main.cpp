@@ -2,9 +2,12 @@
 #include <stdbool.h>
 #include "parser.hpp"
 
-int main(){
 
+// FIXME - for time being just put this function here
+
+void launch_db(){
     Parser parser;
+    // SymbolTable symbol_table;
 
     std::string query;
 
@@ -38,7 +41,11 @@ int main(){
     // } else {
     //     std::println("failed :(");
     // }
+}
 
+int main(){
+
+    launch_db();
 
     return 0;
 }

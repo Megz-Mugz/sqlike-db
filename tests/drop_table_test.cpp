@@ -50,8 +50,8 @@ TEST(DropTableTest, DiesWhenExistsKeywordIsMissing) {
     EXPECT_DEATH(parser.parse_query("DROP TABLE IF Student;"), "");
 }
 
-TEST(DropTableTest, DiesWhenExtraTokensFollowStatement) {
+TEST(DropTableTest, ReturnsFalseWhenExtraTokensFollowStatement) {
     Parser parser;
 
-    EXPECT_DEATH(parser.parse_query("DROP TABLE Student EXTRA;"), "");
+    EXPECT_FALSE(parser.parse_query("DROP TABLE Student EXTRA;"));
 }

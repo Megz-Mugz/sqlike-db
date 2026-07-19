@@ -30,58 +30,43 @@ void Parser::match(const TokenType EXPECTED_TOK){
         6. Drop
     If the statement doesn't start with any of these keywords, invalidate statement
 */
-bool Parser::parse_query(std::string_view query){
-
+bool Parser::parse_query(std::string_view query)
+{
     lexer.set_user_query(query);
-
-    // set initial current lookahead
     curr_lookahead = lexer.get_next_token();
-    bool successful_parse = false;
 
-    switch (curr_lookahead.token_type){
-
+    switch (curr_lookahead.token_type) {
         case TokenType::CREATE_TOK:
             parse_create_statement();
-            successful_parse = true;
             break;
-        
+
         case TokenType::INSERT_INTO_TOK:
             parse_insert_statement();
-            successful_parse = true;
             break;
-        
+
         case TokenType::UPDATE_TOK:
             parse_update_statement();
-            successful_parse = true;
             break;
 
         case TokenType::SELECT_TOK:
             parse_select_statement();
-            successful_parse = true;
             break;
 
         case TokenType::DELETE_TOK:
             parse_delete_statement();
-            successful_parse = true;
             break;
+
         case TokenType::DROP_TOK:
             parse_drop_statement();
-            successful_parse = true;
             break;
 
-    default:
-            break;
+        default:
+            return false;
     }
 
-    if (successful_parse){
-        if (curr_lookahead.token_type == TokenType::SEMICOLON_TOK){
-            match(TokenType::SEMICOLON_TOK);
-        }
-
-        if (curr_lookahead.token_type != TokenType::END_OF_QUERY_TOK){
-            exit(-1);
-        }
+    if (curr_lookahead.token_type == TokenType::SEMICOLON_TOK) {
+        match(TokenType::SEMICOLON_TOK);
     }
-    
-    return successful_parse;
+
+    return curr_lookahead.token_type == TokenType::END_OF_QUERY_TOK;
 }

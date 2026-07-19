@@ -16,6 +16,8 @@ private:
     Lexer lexer;
     Token curr_lookahead;
 
+    // SymbolTable symbol_table;
+
     void match(const TokenType EXPECTED_TOK);
 
     // functions for parsing "create" statements

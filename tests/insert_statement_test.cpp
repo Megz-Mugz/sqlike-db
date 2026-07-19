@@ -163,11 +163,11 @@ TEST(InsertStatementTest, DiesWhenSecondValuesRowIsMissingLeftParen) {
             )"), "");
 }
 
-TEST(InsertStatementTest, DiesWhenExtraTokensFollowStatement) {
+TEST(InsertStatementTest, ReturnsFalseWhenExtraTokensFollowStatement) {
     Parser parser;
 
-    EXPECT_DEATH(parser.parse_query(R"(
+    EXPECT_FALSE(parser.parse_query(R"(
             INSERT INTO Student
             VALUES (1, 'Liam') EXTRA;
-            )"), "");
+            )"));
 }

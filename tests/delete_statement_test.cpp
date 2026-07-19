@@ -77,8 +77,8 @@ TEST(DeleteStatementTest, DiesWhenWhereValueIsNotSupportedLiteral) {
         parser.parse_query("DELETE FROM Student WHERE id = OtherId;"), "");
 }
 
-TEST(DeleteStatementTest, DiesWhenExtraTokensFollowStatement) {
+TEST(DeleteStatementTest, ReturnsFalseWhenExtraTokensFollowStatement) {
     Parser parser;
 
-    EXPECT_DEATH(parser.parse_query("DELETE FROM Student EXTRA;"), "");
+    EXPECT_FALSE(parser.parse_query("DELETE FROM Student EXTRA;"));
 }

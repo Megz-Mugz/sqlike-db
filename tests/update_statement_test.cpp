@@ -84,12 +84,11 @@ TEST(UpdateStatementTest, DiesWhenAssignmentValueIsNotSupportedLiteral) {
     EXPECT_DEATH(parser.parse_query("UPDATE Student SET Name = OtherName"), "");
 }
 
-TEST(UpdateStatementTest, DiesWhenCommaIsMissingBetweenAssignments) {
+TEST(UpdateStatementTest, ReturnsFalseWhenCommaIsMissingBetweenAssignments) {
     Parser parser;
 
-    EXPECT_DEATH(
-        parser.parse_query("UPDATE Student SET Name = 'Alfred' City = 'Frankfurt'"),
-        "");
+    EXPECT_FALSE(
+        parser.parse_query("UPDATE Student SET Name = 'Alfred' City = 'Frankfurt'"));
 }
 
 TEST(UpdateStatementTest, DiesWhenAssignmentIsMissingAfterComma) {
@@ -122,10 +121,9 @@ TEST(UpdateStatementTest, DiesWhenWhereValueIsNotSupportedLiteral) {
     EXPECT_DEATH(parser.parse_query("UPDATE Student SET Active = true WHERE id = OtherId"), "");
 }
 
-TEST(UpdateStatementTest, DiesWhenExtraTokensFollowStatement) {
+TEST(UpdateStatementTest, ReturnsFalseWhenExtraTokensFollowStatement) {
     Parser parser;
 
-    EXPECT_DEATH(
-        parser.parse_query("UPDATE Student SET Active = true WHERE id = 1 EXTRA"),
-        "");
+    EXPECT_FALSE(
+        parser.parse_query("UPDATE Student SET Active = true WHERE id = 1 EXTRA"));
 }

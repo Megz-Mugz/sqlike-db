@@ -84,10 +84,10 @@ TEST(CreateTableTest, DiesWhenCommaIsMissingBetweenColumns) {
                                     NAME TEXT))"), "");
 }
 
-TEST(CreateTableTest, DiesWhenExtraTokensFollowStatement) {
+TEST(CreateTableTest, ReturnsFalseWhenExtraTokensFollowStatement) {
     Parser parser;
 
-    EXPECT_DEATH(parser.parse_query("CREATE TABLE USERS EXTRA"), "");
+    EXPECT_FALSE(parser.parse_query("CREATE TABLE USERS EXTRA"));
 }
 
 // after ID, missing datatype, column must have a datatype 

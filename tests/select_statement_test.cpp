@@ -200,19 +200,18 @@ TEST(SelectStatementTest, DiesWhenWhereValueIsNotSupportedLiteral) {
     EXPECT_DEATH(parser.parse_query("SELECT Name FROM Student WHERE id = OtherId"), "");
 }
 
-TEST(SelectStatementTest, DiesWhenSecondWhereConditionIsPresent) {
+TEST(SelectStatementTest, ReturnsFalseWhenSecondWhereConditionIsPresent) {
     Parser parser;
 
-    EXPECT_DEATH(
+    EXPECT_FALSE(
         parser.parse_query(
-            "SELECT Name FROM Student WHERE Active = true AND Enrolled = true"),
-        "");
+            "SELECT Name FROM Student WHERE Active = true AND Enrolled = true"));
 }
 
-TEST(SelectStatementTest, DiesWhenExtraTokensFollowStatement) {
+TEST(SelectStatementTest, ReturnsFalseWhenExtraTokensFollowStatement) {
     Parser parser;
 
-    EXPECT_DEATH(parser.parse_query("SELECT Name FROM Student EXTRA"), "");
+    EXPECT_FALSE(parser.parse_query("SELECT Name FROM Student EXTRA"));
 }
 
 TEST(SelectStatementTest, DiesWhenJoinedTableNameIsMissing) {
