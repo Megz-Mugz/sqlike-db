@@ -1,32 +1,55 @@
 #include <unordered_map>
 
-typedef struct ColumnData {
+enum Constraint{
+    NOT_NULL
+    UNIQUE
+};
+
+enum Type{
+    INT, 
+    TEXT, 
+    BOOL
+};
+
+/*
+    Represents the various properties of each column. 
+*/
+struct ColumnData {
 
     Type m_type;
     Constraint m_constraint;
     bool is_primary_key;
     bool is_foreign_key;
+    bool has_default;
 
-} ColumnData;
+    // int -> default 0
+    // text -> default ''
+    // bool -> default false
+};
 
 /*
-    Each table is composed of 
+    Each table is composed of columns which have types & constraints. 
 */
-typedef struct TableData {
+struct TableData {
 
     std::unordered_map<std::string column_name, ColumnData> columns_and_data;
 
-} TableData;
+};
 
+
+/*
+    Lookups are done with the name, 
+*/
 class SymbolTable
 {
 
 public:
-
+    
+    // actions to perform with the symbol table
     auto get_symbol_table_size();
-    auto insert_element();
-    auto delete_element();
-    auto lookup_element();
+    auto insert_table();
+    auto delete_table();
+    auto lookup_table();
 
 
 private:

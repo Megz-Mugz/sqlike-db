@@ -35,14 +35,18 @@ void Parser::parse_column_reference() {
 void Parser::parse_select_columns() {
     if (curr_lookahead.token_type == STAR_TOK) {
         match(STAR_TOK);
-        return;
+    } else {
+        parse_column_reference();
     }
-
-    parse_column_reference();
 
     while (curr_lookahead.token_type == COMMA_TOK) {
         match(COMMA_TOK);
-        parse_column_reference();
+
+        if (curr_lookahead.token_type == STAR_TOK) {
+            match(STAR_TOK);
+        } else {
+            parse_column_reference();
+        }
     }
 }
 

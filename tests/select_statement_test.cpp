@@ -125,25 +125,25 @@ TEST(SelectStatementTest, ParsesUnqualifiedColumnAfterQualifiedColumn) {
 TEST(SelectStatementTest, ParsesWildcardFollowedByQualifiedColumnInJoin) {
     Parser parser;
 
-    EXPECT_DEATH(parser.parse_query(R"(
+    EXPECT_TRUE(parser.parse_query(R"(
             SELECT *, Users.weight
             FROM Users
             JOIN Admins
             ON Users.id = Admins.user_id
             WHERE id = 1;
-            )"), "");
+            )"));
 }
 
 TEST(SelectStatementTest, ParsesWildcardFollowedByUnqualifiedColumn) {
     Parser parser;
 
-    EXPECT_DEATH(parser.parse_query("SELECT *, weight FROM Users"), "");
+    EXPECT_TRUE(parser.parse_query("SELECT *, weight FROM Users"));
 }
 
 TEST(SelectStatementTest, ParsesQualifiedColumnFollowedByWildcard) {
     Parser parser;
 
-    EXPECT_DEATH(parser.parse_query("SELECT Users.weight, * FROM Users"), "");
+    EXPECT_TRUE(parser.parse_query("SELECT Users.weight, * FROM Users"));
 }
 
 TEST(SelectStatementTest, DiesWhenSelectedColumnsAreMissing) {
