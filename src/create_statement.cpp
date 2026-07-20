@@ -89,7 +89,6 @@ void Parser::parse_create_column_statement(){
 
     if (curr_lookahead.token_type == TokenType::COMMA_TOK){
         match(TokenType::COMMA_TOK);
-        
         parse_create_column_statement();
     } else if (curr_lookahead.token_type == TokenType::RIGHT_PAREN_TOK){
         match(TokenType::RIGHT_PAREN_TOK);
@@ -106,6 +105,7 @@ void Parser::parse_create_statement(){
 
     match(TokenType::CREATE_TOK);
     match(TokenType::TABLE_TOK);
+
     create_table_ast.table_name = curr_lookahead.text;
     match(TokenType::IDENTIFIER_TOK);
 

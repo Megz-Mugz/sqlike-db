@@ -24,7 +24,7 @@ enum TokenType {
     IDENTIFIER_TOK,
     CREATE_TOK,
     TABLE_TOK, 
-    UPDATE_TOK, // 3
+    UPDATE_TOK,
     SELECT_TOK, 
     DELETE_TOK, 
     INSERT_INTO_TOK,
@@ -55,9 +55,6 @@ enum TokenType {
     IF_TOK,
     EXISTS_TOK,
     DROP_TOK,
-
-
-    // constraint toks
     PRIMARY_KEY_CONSTRAINT_TOK,
     NOT_NULL_CONSTRAINT_TOK,
     DEFAULT_CONSTRAINT_TOK,
@@ -74,27 +71,20 @@ const std::unordered_map<std::string, TokenType> keywords = {
     {"INT", TokenType::INT_TOK}, 
     {"BOOLEAN", TokenType::BOOLEAN_TOK}, 
     {"TEXT", TokenType::TEXT_TOK},
-
-    // Compound keywords
     {"PRIMARY KEY", TokenType::PRIMARY_KEY_CONSTRAINT_TOK},
     {"NOT NULL", TokenType::NOT_NULL_CONSTRAINT_TOK},
     {"FOREIGN KEY", TokenType::FOREIGN_KEY_CONSTRAINT_TOK},
     {"INSERT INTO", TokenType::INSERT_INTO_TOK},
-
-    
     {"DEFAULT", TokenType::DEFAULT_CONSTRAINT_TOK},
     {"UNIQUE", TokenType::UNIQUE_CONSTRAINT_TOK},
-
     {"VALUES", TokenType::VALUES_TOK}, 
     {"UPDATE", TokenType::UPDATE_TOK}, 
-    
     {"WHERE", TokenType::WHERE_TOK}, 
     {"SET", TokenType::SET_TOK},
     {"FROM", TokenType::FROM_TOK},
     {"SELECT", TokenType::SELECT_TOK},
     {"JOIN", TokenType::JOIN_TOK},
     {"ON", TokenType::ON_TOK},
-    
     {"DELETE", TokenType::DELETE_TOK},
     {"DROP", TokenType::DROP_TOK},
     {"IF", TokenType::IF_TOK},
