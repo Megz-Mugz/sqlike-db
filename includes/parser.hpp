@@ -4,6 +4,7 @@
 #include <stdbool.h>
 
 #include "lexer.hpp"
+#include "ast.hpp"
 
 class Parser 
 {
@@ -16,13 +17,15 @@ private:
     Lexer lexer;
     Token curr_lookahead;
 
+    CreateTableAST create_table_ast;
+
     // SymbolTable symbol_table;
 
     void match(const TokenType EXPECTED_TOK);
 
     // functions for parsing "create" statements
-    void parse_column_constraint();
-    void parse_column_datatype();
+    void parse_column_constraint(ColumnData& col_data);
+    void parse_column_datatype(ColumnData& col_data);
     void parse_create_statement();
     void parse_create_column_statement();
 

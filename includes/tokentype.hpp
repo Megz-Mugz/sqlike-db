@@ -4,6 +4,22 @@
 #include <string>
 #include <unordered_set>
 
+enum class Constraint{
+    NONE,
+    PRIMARY_KEY, 
+    FOREIGN_KEY, 
+    NOT_NULL,
+    UNIQUE, 
+    DEFAULT
+};
+
+enum class Type{
+    UNKNOWN,
+    INT, 
+    TEXT, 
+    BOOL
+};
+
 enum TokenType {
     IDENTIFIER_TOK,
     CREATE_TOK,

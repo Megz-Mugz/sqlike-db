@@ -23,7 +23,7 @@ void launch_db(){
     //     }
     // }
 
-    query = R"(CREATE TABLE USERS
+    query = R"(CREATE TABLE Users
             (ID INT,
             NAME TEXT,
             ACTIVE BOOLEAN))";

@@ -1,15 +1,8 @@
 #include <unordered_map>
 
-enum Constraint{
-    NOT_NULL
-    UNIQUE
-};
+#include "tokentype.hpp"
 
-enum Type{
-    INT, 
-    TEXT, 
-    BOOL
-};
+
 
 /*
     Represents the various properties of each column. 
@@ -38,7 +31,7 @@ struct TableData {
 
 
 /*
-    Lookups are done with the name, 
+    Lookups are done with the table name.  
 */
 class SymbolTable
 {

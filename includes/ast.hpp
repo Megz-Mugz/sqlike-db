@@ -1,11 +1,19 @@
 #pragma once
 
 #include <iostream>
-#include <cctype>
-#include <string>
-#include <algorithm>
-#include <optional>
+#include <vector>
 
 #include "tokentype.hpp"
 
+struct ColumnData {
 
+    std::string col_name{};
+    Type m_type{Type::UNKNOWN};
+    Constraint m_constraint{Constraint::NONE};
+};
+
+
+struct CreateTableAST {
+    std::string table_name{};
+    std::vector<ColumnData> columns;
+};
