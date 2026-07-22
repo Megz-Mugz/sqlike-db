@@ -1,38 +1,44 @@
 #pragma once
 
-#include <iostream>
+#include <string>
 #include <vector>
 
 #include "tokentype.hpp"
 
-struct AST 
+class AST
 {
-    virtual void printAST() const;
+public:
+    std::string table_name{};
 
-    virtual void lower();
+    // virtual void printAST() const;
+
+    // virtual void lower() const;
 };
 
 
 // Create Table AST
-struct ColumnData 
+struct ColumnData
 {
     std::string col_name{};
     Type m_type{Type::UNKNOWN};
     Constraint m_constraint{Constraint::NONE};
 };
-struct CreateTableAST {
-    std::string table_name{};
+
+class CreateTableAST : public AST
+{
+public:
     std::vector<ColumnData> columns;
 };
 
 
 using ColumnNames = std::string;
 using ColumnValues = std::string;
+using DBRows = std::vector<ColumnValues>;
 
 // Insert Statement AST
-struct InsertStatementAST 
+class InsertStatementAST : public AST
 {
-    std::string table_name{};
+public:
     std::vector<ColumnNames> columns;
-    std::vector<std::vector<ColumnValues>> rows_to_insert;
+    std::vector<DBRows> rows_to_insert;
 };

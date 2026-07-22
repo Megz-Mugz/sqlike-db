@@ -17,8 +17,14 @@ private:
     Lexer lexer;
     Token curr_lookahead;
 
-    CreateTableAST create_table_ast;
-    InsertStatementAST insert_statement_ast;
+    // the various ASTs that can exist at runtime
+    CreateTableAST      create_table_ast;
+    InsertStatementAST  insert_statement_ast;
+    // UpdateStatementAST  update_statement_ast;
+    // SelectStatementAST  select_statement_ast;
+    // DropStatementAST    drop_statement_ast;
+    // DeleteStatementAST  delete_statement_ast
+
 
     // SymbolTable symbol_table;
 

@@ -28,6 +28,7 @@ void Parser::parse_where_condition(){
 
     return;
 }
+
 void Parser::parse_columns_to_update(){
     match(IDENTIFIER_TOK);
     match(EQUAL_TOK);
@@ -55,8 +56,6 @@ void Parser::parse_columns_to_update(){
     }
 
 }
-
-
 
 void Parser::parse_update_statement(){
     match(UPDATE_TOK);
