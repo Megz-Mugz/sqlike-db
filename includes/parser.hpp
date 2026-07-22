@@ -18,6 +18,7 @@ private:
     Token curr_lookahead;
 
     CreateTableAST create_table_ast;
+    InsertStatementAST insert_statement_ast;
 
     // SymbolTable symbol_table;
 
@@ -33,7 +34,7 @@ private:
     void parse_insert_statement();
     void parse_values_to_insert();
     void parse_columns_to_insert_into();
-    void parse_actual_value();
+    void parse_actual_value(std::vector<ColumnValues>& current_row);
 
     // functions for parsing "update" statements
     void parse_update_statement();
