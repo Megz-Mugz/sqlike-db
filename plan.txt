@@ -82,13 +82,18 @@ DROP TABLE table_name;
 
 2. typecheck to ensure semantic correctness
 
-build symbol table!
+first build AST (makesure to include types)
+between these 2 major steps, do a code refactor
+- enforce singleton pattern accordingly
+- make the parser return an AST & handle it properly for code generation
 
-3. upon successful parse, using the AST, generate x86-64 code for a .s failed
+then, build symbol table (doubles as database schema, called schema in codebase)
+- write schema to a file like a real web app/db would
+- implement the actual table with pointers (for foreign keys) look into smart pointers
 
-TODO more detailed plan for #3 here
+3. upon successful parse, using the AST, generate LLVM IRBuilder code
 
-4. execute this .s file accordingly
+4. Figure out how to actually get it to run
 
 ============== networking stuff ================
 setup Docker here

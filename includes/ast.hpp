@@ -34,7 +34,7 @@ using ColumnName = std::string;
 using ColumnValue = std::string;
 using DBRows = std::vector<ColumnValue>;
 
-// Insert Statement AST
+// FIXME put types in vals to insert Insert Statement AST
 class InsertStatementAST : public AST
 {
 public:
@@ -42,7 +42,7 @@ public:
     std::vector<DBRows> rows_to_insert;
 };
 
-// Update Statement AST
+// FIXME put types in vals to update Update Statement AST
 
 class UpdateStatementAST : public AST 
 {
