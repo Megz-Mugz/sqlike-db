@@ -96,7 +96,6 @@ then, build symbol table (doubles as database schema, called schema in codebase)
 4. Figure out how to actually get it to run
 
 ============== networking stuff ================
-setup Docker here
 
 5. make client/server architecture, client sends request, and server sends response back
 w/ result
