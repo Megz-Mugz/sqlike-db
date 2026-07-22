@@ -23,7 +23,6 @@ struct ColumnData
     Type m_type{Type::UNKNOWN};
     Constraint m_constraint{Constraint::NONE};
 };
-
 class CreateTableAST : public AST
 {
 public:
@@ -31,14 +30,29 @@ public:
 };
 
 
-using ColumnNames = std::string;
-using ColumnValues = std::string;
-using DBRows = std::vector<ColumnValues>;
+using ColumnName = std::string;
+using ColumnValue = std::string;
+using DBRows = std::vector<ColumnValue>;
 
 // Insert Statement AST
 class InsertStatementAST : public AST
 {
 public:
-    std::vector<ColumnNames> columns;
+    std::vector<ColumnName> columns;
     std::vector<DBRows> rows_to_insert;
 };
+
+// Update Statement AST
+
+class UpdateStatementAST : public AST 
+{
+public:
+    std::unordered_map<ColumnName, ColumnValue> values_to_set;
+    std::unordered_map<ColumnName, ColumnValue> where_clause;
+};
+
+// Select Statement AST
+
+// Delete Statement AST
+
+// Drop Statement AST

@@ -2,7 +2,7 @@
 #include "tokentype.hpp"
 #include "parser.hpp"
 
-void Parser::parse_actual_value(std::vector<ColumnValues>& current_row){
+void Parser::parse_actual_value(std::vector<ColumnValue>& current_row){
     switch (curr_lookahead.token_type) {
         case INT_LIT_TOK:
             current_row.push_back(curr_lookahead.text);
@@ -37,7 +37,7 @@ void Parser::parse_actual_value(std::vector<ColumnValues>& current_row){
 void Parser::parse_values_to_insert(){
     match(VALUES_TOK);
 
-    std::vector<ColumnValues> current_row;
+    std::vector<ColumnValue> current_row;
 
     if (curr_lookahead.token_type == LEFT_PAREN_TOK){
         match(LEFT_PAREN_TOK);
@@ -49,7 +49,7 @@ void Parser::parse_values_to_insert(){
     insert_statement_ast.rows_to_insert.push_back(current_row);
 
     while (curr_lookahead.token_type == COMMA_TOK){
-        std::vector<ColumnValues> current_row;
+        std::vector<ColumnValue> current_row;
 
         match(COMMA_TOK);
 

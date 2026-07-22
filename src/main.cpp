@@ -24,11 +24,9 @@ void launch_db(){
     // }
 
     query = R"(
-            INSERT INTO Student (ROLL_NO, NAME, ADDRESS, PHONE, AGE)
-            VALUES (1, 'Liam', 'New York', 'xxxxxxxxxx', 18),
-                   (2, 'Sophia', 'Berlin', 'xxxxxxxxxx', 399),
-                   (3, 'Akira', 'Tokyo', 'xxxxxxxxxx', 298191),
-                   (4, 'Carlos', 'Tokyo', 'xxxxxxxxxx', 19191);
+            UPDATE Student
+            SET Age = 42, Active = true, Name = 'Alfred'
+            WHERE Name = 'Alfred Schmidt';
             )";
 
     std::println("Query is: {}", query);

@@ -20,7 +20,7 @@ private:
     // the various ASTs that can exist at runtime
     CreateTableAST      create_table_ast;
     InsertStatementAST  insert_statement_ast;
-    // UpdateStatementAST  update_statement_ast;
+    UpdateStatementAST  update_statement_ast;
     // SelectStatementAST  select_statement_ast;
     // DropStatementAST    drop_statement_ast;
     // DeleteStatementAST  delete_statement_ast
@@ -40,7 +40,7 @@ private:
     void parse_insert_statement();
     void parse_values_to_insert();
     void parse_columns_to_insert_into();
-    void parse_actual_value(std::vector<ColumnValues>& current_row);
+    void parse_actual_value(std::vector<ColumnValue>& current_row);
 
     // functions for parsing "update" statements
     void parse_update_statement();
