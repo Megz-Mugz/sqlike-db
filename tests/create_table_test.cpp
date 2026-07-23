@@ -17,10 +17,23 @@ TEST(CreateTableTest, ParsesCreateTableUsersWithSemicolon) {
 TEST(CreateTableTest, ParsesCreateTableWithColumnTypes) {
     Parser parser;
 
-    EXPECT_TRUE(parser.parse_query(R"(CREATE TABLE USERS
-                                    (ID INT,
-                                    NAME TEXT,
-                                    ACTIVE BOOLEAN))"));
+    auto parsed_query = parser.parse_query(R"(CREATE TABLE USERS
+                                              (ID INT,
+                                              NAME TEXT,
+                                              ACTIVE BOOLEAN))");
+
+    ASSERT_TRUE(parsed_query.has_value());
+    ASSERT_TRUE(std::holds_alternative<CreateTableAST>(*parsed_query));
+
+    const auto& create_ast = std::get<CreateTableAST>(*parsed_query);
+    EXPECT_EQ(create_ast.table_name, "USERS");
+    ASSERT_EQ(create_ast.columns.size(), 3U);
+    EXPECT_EQ(create_ast.columns[0].col_name, "ID");
+    EXPECT_EQ(create_ast.columns[0].m_type, Type::INT);
+    EXPECT_EQ(create_ast.columns[1].col_name, "NAME");
+    EXPECT_EQ(create_ast.columns[1].m_type, Type::TEXT);
+    EXPECT_EQ(create_ast.columns[2].col_name, "ACTIVE");
+    EXPECT_EQ(create_ast.columns[2].m_type, Type::BOOL);
 }
 
 
@@ -87,7 +100,7 @@ TEST(CreateTableTest, DiesWhenCommaIsMissingBetweenColumns) {
 TEST(CreateTableTest, ReturnsFalseWhenExtraTokensFollowStatement) {
     Parser parser;
 
-    EXPECT_FALSE(parser.parse_query("CREATE TABLE USERS EXTRA"));
+    EXPECT_FALSE(parser.parse_query("CREATE TABLE USERS EXTRA").has_value());
 }
 
 // after ID, missing datatype, column must have a datatype 

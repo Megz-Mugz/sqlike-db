@@ -27,7 +27,7 @@ void Database::launch_db(){
         }
     } else {
         query = R"(CREATE TABLE USERS
-                                    (ID INT,
+                                    (ID INT
                                     NAME TEXT,
                                     ACTIVE BOOLEAN))";
 

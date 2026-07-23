@@ -53,5 +53,6 @@ TEST(DropTableTest, DiesWhenExistsKeywordIsMissing) {
 TEST(DropTableTest, ReturnsFalseWhenExtraTokensFollowStatement) {
     Parser parser;
 
-    EXPECT_FALSE(parser.parse_query("DROP TABLE Student EXTRA;"));
+    EXPECT_FALSE(
+        parser.parse_query("DROP TABLE Student EXTRA;").has_value());
 }

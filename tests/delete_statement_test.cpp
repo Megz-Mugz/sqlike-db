@@ -80,5 +80,6 @@ TEST(DeleteStatementTest, DiesWhenWhereValueIsNotSupportedLiteral) {
 TEST(DeleteStatementTest, ReturnsFalseWhenExtraTokensFollowStatement) {
     Parser parser;
 
-    EXPECT_FALSE(parser.parse_query("DELETE FROM Student EXTRA;"));
+    EXPECT_FALSE(
+        parser.parse_query("DELETE FROM Student EXTRA;").has_value());
 }

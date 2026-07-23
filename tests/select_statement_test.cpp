@@ -204,14 +204,17 @@ TEST(SelectStatementTest, ReturnsFalseWhenSecondWhereConditionIsPresent) {
     Parser parser;
 
     EXPECT_FALSE(
-        parser.parse_query(
-            "SELECT Name FROM Student WHERE Active = true AND Enrolled = true"));
+        parser
+            .parse_query(
+                "SELECT Name FROM Student WHERE Active = true AND Enrolled = true")
+            .has_value());
 }
 
 TEST(SelectStatementTest, ReturnsFalseWhenExtraTokensFollowStatement) {
     Parser parser;
 
-    EXPECT_FALSE(parser.parse_query("SELECT Name FROM Student EXTRA"));
+    EXPECT_FALSE(
+        parser.parse_query("SELECT Name FROM Student EXTRA").has_value());
 }
 
 TEST(SelectStatementTest, DiesWhenJoinedTableNameIsMissing) {

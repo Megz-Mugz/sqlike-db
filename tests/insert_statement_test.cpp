@@ -10,7 +10,16 @@ TEST(InsertStatementTest, ParsesInsertIntoStudentWithValues) {
             VALUES (282921, 'Chicago');
             )";
 
-    EXPECT_TRUE(parser.parse_query(query));
+    auto parsed_query = parser.parse_query(query);
+
+    ASSERT_TRUE(parsed_query.has_value());
+    ASSERT_TRUE(std::holds_alternative<InsertStatementAST>(*parsed_query));
+
+    const auto& insert_ast = std::get<InsertStatementAST>(*parsed_query);
+    EXPECT_EQ(insert_ast.table_name, "Student");
+    ASSERT_EQ(insert_ast.rows_to_insert.size(), 1U);
+    EXPECT_EQ(insert_ast.rows_to_insert[0],
+              (DBRows{"282921", "Chicago"}));
 }
 
 TEST(InsertStatementTest, ParsesInsertIntoStudentWithSeveralValues) {
@@ -169,5 +178,5 @@ TEST(InsertStatementTest, ReturnsFalseWhenExtraTokensFollowStatement) {
     EXPECT_FALSE(parser.parse_query(R"(
             INSERT INTO Student
             VALUES (1, 'Liam') EXTRA;
-            )"));
+            )").has_value());
 }
