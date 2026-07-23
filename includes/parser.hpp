@@ -10,7 +10,7 @@ class Parser
 {
 public:
 
-    bool parse_query(std::string_view query);
+    std::optional<AST> parse_query(std::string_view query);
 
 private:
 
@@ -33,7 +33,7 @@ private:
     // functions for parsing "create" statements
     void parse_column_constraint(ColumnData& col_data);
     void parse_column_datatype(ColumnData& col_data);
-    void parse_create_statement();
+    AST parse_create_statement();
     void parse_create_column_statement();
 
     // functions for parsing "insert" statements

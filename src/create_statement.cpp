@@ -1,5 +1,3 @@
-#include "lexer.hpp"
-#include "tokentype.hpp"
 #include "parser.hpp"
 
 /*
@@ -101,7 +99,7 @@ void Parser::parse_create_column_statement(){
 /*
     Begins parsing for the entire create statement. 
 */
-void Parser::parse_create_statement(){
+AST Parser::parse_create_statement(){
 
     match(TokenType::CREATE_TOK);
     match(TokenType::TABLE_TOK);
@@ -113,7 +111,6 @@ void Parser::parse_create_statement(){
         match(TokenType::LEFT_PAREN_TOK);
         parse_create_column_statement();
     }
-    // TODO lookahead for end of line, if no end of line, throw error
     
-    return;
+    return create_table_ast;
 }

@@ -30,14 +30,16 @@ void Parser::match(const TokenType EXPECTED_TOK){
         6. Drop
     If the statement doesn't start with any of these keywords, invalidate statement
 */
-bool Parser::parse_query(std::string_view query)
+std::optional<AST> Parser::parse_query(std::string_view query)
 {
     lexer.set_user_query(query);
     curr_lookahead = lexer.get_next_token();
 
+    AST generated_ast;
+
     switch (curr_lookahead.token_type) {
         case TokenType::CREATE_TOK:
-            parse_create_statement();
+            generated_ast = parse_create_statement();
             break;
 
         case TokenType::INSERT_INTO_TOK:
@@ -61,12 +63,14 @@ bool Parser::parse_query(std::string_view query)
             break;
 
         default:
-            return false;
+            return std::nullopt;
     }
 
     if (curr_lookahead.token_type == TokenType::SEMICOLON_TOK) {
         match(TokenType::SEMICOLON_TOK);
     }
 
-    return curr_lookahead.token_type == TokenType::END_OF_QUERY_TOK;
+    match(TokenType::END_OF_QUERY_TOK);
+
+    return generated_ast;
 }
