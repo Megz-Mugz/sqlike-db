@@ -1,12 +1,13 @@
 #include "typechecker.hpp"
 
 #include <print>
-#include <variant>
 
-bool Typechecker::typecheck_ast(const AST& ast){
+bool Typechecker::typecheck_ast(const AST& ast, Schema& schema){
 
     if (std::holds_alternative<CreateTableAST>(ast)) {
-        const auto& create_ast = std::get<CreateTableAST>(ast);
+        auto create_table_ast = std::get<CreateTableAST>(ast);
+
+        schema.insert_table(create_table_ast);
 
         // Set a breakpoint on the next line.
         std::println("Valid Create Statement");

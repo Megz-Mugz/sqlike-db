@@ -23,6 +23,7 @@ add_library(sqllike_core
     src/schema.cpp
     src/select_statement.cpp
     src/update_statement.cpp
+    src/schema.cpp
 )
 
 target_compile_features(sqllike_core PUBLIC cxx_std_23)

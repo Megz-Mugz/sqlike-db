@@ -35,7 +35,7 @@ void Database::launch_db(){
         
         if (auto ast = parser.parse_query(query))
         {
-            typechecker.typecheck_ast(*ast);
+            typechecker.typecheck_ast(*ast, schema);
         } else {
             std::println("failed :(");
         }
