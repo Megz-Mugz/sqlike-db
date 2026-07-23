@@ -80,7 +80,7 @@ also be able to handle without IF EXISTS like this:
 DROP TABLE table_name;
 
 
-2. typecheck to ensure semantic correctness
+2. AST & typechecking
 
 first build AST (makesure to include types)
 between these 2 major steps, do a code refactor
@@ -90,6 +90,8 @@ between these 2 major steps, do a code refactor
 then, build symbol table (doubles as database schema, called schema in codebase)
 - write schema to a file like a real web app/db would
 - implement the actual table with pointers (for foreign keys) look into smart pointers
+
+then, begin typechecking with the ASTs
 
 3. upon successful parse, using the AST, generate LLVM IRBuilder code
 
