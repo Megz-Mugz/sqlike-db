@@ -39,20 +39,15 @@ std::optional<AST> Parser::parse_query(std::string_view query)
 
     switch (curr_lookahead.token_type) {
         case TokenType::CREATE_TOK:
-            create_table_ast = {};
             generated_ast = parse_create_statement();
             break;
 
         case TokenType::INSERT_INTO_TOK:
-            insert_statement_ast = {};
-            parse_insert_statement();
-            generated_ast = insert_statement_ast;
+            generated_ast = parse_insert_statement();
             break;
 
         case TokenType::UPDATE_TOK:
-            update_statement_ast = {};
-            parse_update_statement();
-            generated_ast = update_statement_ast;
+            generated_ast = parse_update_statement();
             break;
 
         case TokenType::SELECT_TOK:

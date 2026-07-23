@@ -3,3 +3,6 @@ src/main
 build/
 .vscode/
 *.sqlike
+grammar.txt
+plan.txt
+TODO.txt

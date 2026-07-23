@@ -27,21 +27,15 @@ void Database::launch_db(){
         }
     } else {
         query = R"(CREATE TABLE USERS
-                                    (ID INT
-                                    NAME TEXT,
-                                    ACTIVE BOOLEAN))";
+                    (ID INT,
+                    NAME TEXT,
+                    ACTIVE BOOLEAN))";
 
         std::println("Query is: {}", query);
         
         if (auto ast = parser.parse_query(query))
         {
-            if (std::holds_alternative<CreateTableAST>(*ast)) {
-                std::println("Valid Create Statement");
-            } else if (std::holds_alternative<InsertStatementAST>(*ast)) {
-                std::println("Valid Insert Statement");
-            } else if (std::holds_alternative<UpdateStatementAST>(*ast)) {
-                std::println("Valid Update Statement");
-            }
+            typechecker.typecheck_ast(*ast);
         } else {
             std::println("failed :(");
         }

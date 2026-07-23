@@ -65,7 +65,7 @@ void Parser::parse_columns_to_update(){
 
 }
 
-void Parser::parse_update_statement(){
+AST Parser::parse_update_statement(){
     match(UPDATE_TOK);
     update_statement_ast.table_name = curr_lookahead.text;
     match(IDENTIFIER_TOK);
@@ -75,4 +75,5 @@ void Parser::parse_update_statement(){
 
     parse_where_condition();
 
+    return update_statement_ast;
 }

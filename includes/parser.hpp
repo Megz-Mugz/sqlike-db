@@ -37,13 +37,13 @@ private:
     void parse_create_column_statement();
 
     // functions for parsing "insert" statements
-    void parse_insert_statement();
+    AST parse_insert_statement();
     void parse_values_to_insert();
     void parse_columns_to_insert_into();
     void parse_actual_value(std::vector<ColumnValue>& current_row);
 
     // functions for parsing "update" statements
-    void parse_update_statement();
+    AST parse_update_statement();
     void parse_columns_to_update();
     void parse_where_condition();
 

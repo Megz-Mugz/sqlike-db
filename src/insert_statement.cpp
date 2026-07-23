@@ -80,7 +80,7 @@ void Parser::parse_columns_to_insert_into(){
     return;
 }
 
-void Parser::parse_insert_statement(){
+AST Parser::parse_insert_statement(){
     match(INSERT_INTO_TOK);
     insert_statement_ast.table_name = curr_lookahead.text;
     match(IDENTIFIER_TOK);
@@ -95,5 +95,7 @@ void Parser::parse_insert_statement(){
     } else {
         exit(-1);
     }
+
+    return insert_statement_ast;
 
 }

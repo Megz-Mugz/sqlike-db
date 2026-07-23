@@ -1,0 +1,52 @@
+#!/bin/sh
+
+set -eu
+
+project_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+build_dir="$project_dir/build/debug"
+cd "$project_dir"
+
+configure() {
+    cmake --preset debug
+}
+
+build() {
+    configure
+    cmake --build --preset debug --target sqllike
+}
+
+command=${1:-help}
+if [ "$#" -gt 0 ]; then
+    shift
+fi
+
+case "$command" in
+    run)
+        build
+        exec "$build_dir/sqllike" "$@"
+        ;;
+    test)
+        configure
+        cmake --build --preset debug --target sqllike_tests
+        exec ctest --preset debug --test-dir "$build_dir" --output-on-failure "$@"
+        ;;
+    debug)
+        build
+        exec lldb -- "$build_dir/sqllike" "$@"
+        ;;
+    help|-h|--help)
+        cat <<'EOF'
+Usage: ./dev <command> [arguments]
+
+Commands:
+  run      Build and run sqllike
+  test     Build and run all tests
+  debug    Build and open sqllike in LLDB
+EOF
+        ;;
+    *)
+        echo "Unknown command: $command" >&2
+        echo "Run './dev help' to see the available commands." >&2
+        exit 2
+        ;;
+esac
