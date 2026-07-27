@@ -6,8 +6,9 @@
 void Parser::parse_delete_statement(){
     match(DELETE_TOK);
     match(FROM_TOK);
+    delete_statement_ast.table_name = curr_lookahead.text;
     match(IDENTIFIER_TOK);
-    parse_where_condition();
+    parse_where_condition(delete_statement_ast);
 }
 
 void Parser::parse_drop_statement(){

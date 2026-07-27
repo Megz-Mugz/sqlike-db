@@ -2,6 +2,40 @@
 #include "parser.hpp"
 #include "tokentype.hpp"
 
+
+// FIXME for the time being, only support one clause, not AND/OR yet
+void Parser::parse_where_condition(AST& current_ast){
+    if (curr_lookahead.token_type == WHERE_TOK){
+        match(WHERE_TOK);
+        auto column_name = curr_lookahead.text;
+        match(IDENTIFIER_TOK);
+        match(EQUAL_TOK);
+        switch(curr_lookahead.token_type){
+            case INT_LIT_TOK:
+                current_ast.where_clause[column_name] = {curr_lookahead.text, Type::INT};
+                match(INT_LIT_TOK);
+                break;
+
+            case STRING_LIT_TOK:
+                current_ast.where_clause[column_name] = {curr_lookahead.text, Type::TEXT};
+                match(STRING_LIT_TOK);
+                break;
+
+            case BOOL_LIT_TOK:
+                current_ast.where_clause[column_name] = {curr_lookahead.text, Type::BOOL};
+                match(BOOL_LIT_TOK);
+                break;
+
+            default:
+                exit(-1);
+        }
+    }
+
+    return;
+}
+
+
+
 /*
     Determines if the current token is what we expect
     and makes an request for the next token upon valid

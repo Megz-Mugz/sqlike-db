@@ -26,10 +26,13 @@ void Database::launch_db(){
             }
         }
     } else {
-        query = R"(CREATE TABLE USERS
-                    (ID INT,
-                    NAME TEXT,
-                    ACTIVE BOOLEAN))";
+        query = R"(
+                    SELECT Users.name, weight, Users.age
+                    FROM Users
+                    JOIN Admins
+                    ON Users.id = Admins.user_id
+                    WHERE id = 1;
+                )";
 
         std::println("Query is: {}", query);
         

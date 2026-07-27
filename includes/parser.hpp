@@ -21,9 +21,9 @@ private:
     CreateTableAST      create_table_ast;
     InsertStatementAST  insert_statement_ast;
     UpdateStatementAST  update_statement_ast;
-    // SelectStatementAST  select_statement_ast;
-    // DropStatementAST    drop_statement_ast;
-    // DeleteStatementAST  delete_statement_ast
+    SelectStatementAST  select_statement_ast;
+    DropStatementAST    drop_statement_ast;
+    DeleteStatementAST  delete_statement_ast;
 
 
     // SymbolTable symbol_table;
@@ -45,10 +45,10 @@ private:
     // functions for parsing "update" statements
     AST parse_update_statement();
     void parse_columns_to_update();
-    void parse_where_condition();
+    void parse_where_condition(AST& current_ast);
 
     // functions for parsing "select" statements
-    void parse_select_statement();
+    AST parse_select_statement();
     void parse_select_columns();
     void parse_join_condition();
     void parse_column_reference();

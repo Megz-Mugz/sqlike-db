@@ -20,6 +20,8 @@ enum class Type{
     BOOL
 };
 
+constexpr std::string NAME_NOT_SPECIFIED = "";
+
 enum TokenType {
     IDENTIFIER_TOK,
     CREATE_TOK,
