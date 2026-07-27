@@ -6,3 +6,5 @@ build/
 grammar.txt
 plan.txt
 TODO.txt
+dev
+*.txt
