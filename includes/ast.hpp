@@ -17,6 +17,24 @@ struct ColumnData
     std::string col_name{};
     Type m_type{Type::UNKNOWN};
     Constraint m_constraint{Constraint::NONE};
+
+    ColumnData() = default;
+
+    ColumnData(std::string name)
+        : col_name(std::move(name))
+    {}
+
+    ColumnData(std::string name, Type type)
+        : col_name(std::move(name)), 
+          m_type(type)
+    {}
+
+    ColumnData(std::string name, Type type, Constraint constraint)
+        : col_name(std::move(name)), 
+          m_type(type), 
+          m_constraint(constraint)
+    {}
+    
 };
 
 struct CreateTableAST : ASTBase
@@ -26,11 +44,11 @@ struct CreateTableAST : ASTBase
 
 using ColumnName = std::string;
 using ColumnValue = std::string;
-using DBRows = std::vector<ColumnValue>;
+using DBRows = std::vector<ColumnData>;
 
 struct InsertStatementAST : ASTBase
 {
-    std::vector<ColumnName> columns;
+    std::vector<ColumnData> columns;
     std::vector<DBRows> rows_to_insert;
 };
 

@@ -40,7 +40,7 @@ private:
     AST parse_insert_statement();
     void parse_values_to_insert();
     void parse_columns_to_insert_into();
-    void parse_actual_value(std::vector<ColumnValue>& current_row);
+    void parse_actual_value(std::vector<ColumnData>& current_row);
 
     // functions for parsing "update" statements
     AST parse_update_statement();

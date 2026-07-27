@@ -18,8 +18,15 @@ TEST(InsertStatementTest, ParsesInsertIntoStudentWithValues) {
     const auto& insert_ast = std::get<InsertStatementAST>(*parsed_query);
     EXPECT_EQ(insert_ast.table_name, "Student");
     ASSERT_EQ(insert_ast.rows_to_insert.size(), 1U);
-    EXPECT_EQ(insert_ast.rows_to_insert[0],
-              (DBRows{"282921", "Chicago"}));
+
+    const auto& row = insert_ast.rows_to_insert[0];
+    ASSERT_EQ(row.size(), 2U);
+    EXPECT_EQ(row[0].col_name, "282921");
+    EXPECT_EQ(row[0].m_type, Type::INT);
+    EXPECT_EQ(row[0].m_constraint, Constraint::NONE);
+    EXPECT_EQ(row[1].col_name, "Chicago");
+    EXPECT_EQ(row[1].m_type, Type::TEXT);
+    EXPECT_EQ(row[1].m_constraint, Constraint::NONE);
 }
 
 TEST(InsertStatementTest, ParsesInsertIntoStudentWithSeveralValues) {
@@ -51,10 +58,27 @@ TEST(InsertStatementTest, ParsesMixedCaseInsertKeywords) {
 TEST(InsertStatementTest, ParsesInsertWithBooleanLiteral) {
     Parser parser;
 
-    EXPECT_TRUE(parser.parse_query(R"(
+    auto parsed_query = parser.parse_query(R"(
             INSERT INTO Student (ID, NAME, ACTIVE)
             VALUES (1, 'Liam', true);
-            )"));
+            )");
+
+    ASSERT_TRUE(parsed_query.has_value());
+    ASSERT_TRUE(std::holds_alternative<InsertStatementAST>(*parsed_query));
+
+    const auto& insert_ast = std::get<InsertStatementAST>(*parsed_query);
+    ASSERT_EQ(insert_ast.columns.size(), 3U);
+    EXPECT_EQ(insert_ast.columns[0].col_name, "ID");
+    EXPECT_EQ(insert_ast.columns[1].col_name, "NAME");
+    EXPECT_EQ(insert_ast.columns[2].col_name, "ACTIVE");
+
+    ASSERT_EQ(insert_ast.rows_to_insert.size(), 1U);
+    const auto& row = insert_ast.rows_to_insert[0];
+    ASSERT_EQ(row.size(), 3U);
+    EXPECT_EQ(row[0].m_type, Type::INT);
+    EXPECT_EQ(row[1].m_type, Type::TEXT);
+    EXPECT_EQ(row[2].col_name, "true");
+    EXPECT_EQ(row[2].m_type, Type::BOOL);
 }
 
 TEST(InsertStatementTest, ParsesInsertWithMixedCaseBooleanLiteral) {
@@ -88,7 +112,22 @@ TEST(InsertStatementTest, ParsesInsertIntoStudentWithMultipleRows) {
                    (4, 'Carlos', 'Tokyo', 'xxxxxxxxxx', 19191);
             )";
 
-    EXPECT_TRUE(parser.parse_query(query));
+    auto parsed_query = parser.parse_query(query);
+
+    ASSERT_TRUE(parsed_query.has_value());
+    ASSERT_TRUE(std::holds_alternative<InsertStatementAST>(*parsed_query));
+
+    const auto& insert_ast = std::get<InsertStatementAST>(*parsed_query);
+    ASSERT_EQ(insert_ast.rows_to_insert.size(), 4U);
+
+    for (const auto& row : insert_ast.rows_to_insert) {
+        ASSERT_EQ(row.size(), 5U);
+        EXPECT_EQ(row[0].m_type, Type::INT);
+        EXPECT_EQ(row[1].m_type, Type::TEXT);
+        EXPECT_EQ(row[2].m_type, Type::TEXT);
+        EXPECT_EQ(row[3].m_type, Type::TEXT);
+        EXPECT_EQ(row[4].m_type, Type::INT);
+    }
 }
 
 TEST(InsertStatementTest, DiesWhenValuesListIsEmpty) {

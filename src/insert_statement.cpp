@@ -2,20 +2,20 @@
 #include "tokentype.hpp"
 #include "parser.hpp"
 
-void Parser::parse_actual_value(std::vector<ColumnValue>& current_row){
+void Parser::parse_actual_value(std::vector<ColumnData>& current_row){
     switch (curr_lookahead.token_type) {
         case INT_LIT_TOK:
-            current_row.push_back(curr_lookahead.text);
+            current_row.emplace_back(curr_lookahead.text, Type::INT);
             match(INT_LIT_TOK);
             break;
 
         case STRING_LIT_TOK:
-            current_row.push_back(curr_lookahead.text);
+            current_row.emplace_back(curr_lookahead.text, Type::TEXT);
             match(STRING_LIT_TOK);
             break;
 
         case BOOL_LIT_TOK:
-            current_row.push_back(curr_lookahead.text);
+            current_row.emplace_back(curr_lookahead.text, Type::BOOL);
             match(BOOL_LIT_TOK);
             break;
 
@@ -37,7 +37,7 @@ void Parser::parse_actual_value(std::vector<ColumnValue>& current_row){
 void Parser::parse_values_to_insert(){
     match(VALUES_TOK);
 
-    std::vector<ColumnValue> current_row;
+    std::vector<ColumnData> current_row;
 
     if (curr_lookahead.token_type == LEFT_PAREN_TOK){
         match(LEFT_PAREN_TOK);
@@ -49,7 +49,7 @@ void Parser::parse_values_to_insert(){
     insert_statement_ast.rows_to_insert.push_back(current_row);
 
     while (curr_lookahead.token_type == COMMA_TOK){
-        std::vector<ColumnValue> current_row;
+        std::vector<ColumnData> current_row;
 
         match(COMMA_TOK);
 
@@ -65,7 +65,7 @@ void Parser::parse_values_to_insert(){
 
 
 void Parser::parse_columns_to_insert_into(){
-    insert_statement_ast.columns.push_back(curr_lookahead.text);
+    insert_statement_ast.columns.emplace_back(curr_lookahead.text);
     match(IDENTIFIER_TOK);
 
     if (curr_lookahead.token_type == COMMA_TOK){

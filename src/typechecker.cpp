@@ -7,12 +7,16 @@ bool Typechecker::typecheck_ast(const AST& ast, Schema& schema){
     if (std::holds_alternative<CreateTableAST>(ast)) {
         auto create_table_ast = std::get<CreateTableAST>(ast);
 
+        // TODO implement this method
         schema.insert_table(create_table_ast);
 
         // Set a breakpoint on the next line.
         std::println("Valid Create Statement");
     } else if (std::holds_alternative<InsertStatementAST>(ast)) {
+        auto insert_statement_ast = std::get<InsertStatementAST>(ast);
+
         std::println("Valid Insert Statement");
+
     } else if (std::holds_alternative<UpdateStatementAST>(ast)) {
         std::println("Valid Update Statement");
     }

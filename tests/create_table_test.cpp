@@ -30,10 +30,13 @@ TEST(CreateTableTest, ParsesCreateTableWithColumnTypes) {
     ASSERT_EQ(create_ast.columns.size(), 3U);
     EXPECT_EQ(create_ast.columns[0].col_name, "ID");
     EXPECT_EQ(create_ast.columns[0].m_type, Type::INT);
+    EXPECT_EQ(create_ast.columns[0].m_constraint, Constraint::NONE);
     EXPECT_EQ(create_ast.columns[1].col_name, "NAME");
     EXPECT_EQ(create_ast.columns[1].m_type, Type::TEXT);
+    EXPECT_EQ(create_ast.columns[1].m_constraint, Constraint::NONE);
     EXPECT_EQ(create_ast.columns[2].col_name, "ACTIVE");
     EXPECT_EQ(create_ast.columns[2].m_type, Type::BOOL);
+    EXPECT_EQ(create_ast.columns[2].m_constraint, Constraint::NONE);
 }
 
 
@@ -51,12 +54,23 @@ TEST(CreateTableTestWithConstraints, ParsesCreateTableUsersWithColumnsAndConstra
 TEST(CreateTableTestWithConstraints, ParsesEachSupportedColumnConstraint) {
     Parser parser;
 
-    EXPECT_TRUE(parser.parse_query(R"(CREATE TABLE USERS
-                                    (ID INT PRIMARY KEY,
-                                    NAME TEXT NOT NULL,
-                                    EMAIL TEXT UNIQUE,
-                                    ACTIVE BOOLEAN DEFAULT,
-                                    ORG_ID INT FOREIGN KEY))"));
+    auto parsed_query = parser.parse_query(R"(CREATE TABLE USERS
+                                               (ID INT PRIMARY KEY,
+                                               NAME TEXT NOT NULL,
+                                               EMAIL TEXT UNIQUE,
+                                               ACTIVE BOOLEAN DEFAULT,
+                                               ORG_ID INT FOREIGN KEY))");
+
+    ASSERT_TRUE(parsed_query.has_value());
+    ASSERT_TRUE(std::holds_alternative<CreateTableAST>(*parsed_query));
+
+    const auto& create_ast = std::get<CreateTableAST>(*parsed_query);
+    ASSERT_EQ(create_ast.columns.size(), 5U);
+    EXPECT_EQ(create_ast.columns[0].m_constraint, Constraint::PRIMARY_KEY);
+    EXPECT_EQ(create_ast.columns[1].m_constraint, Constraint::NOT_NULL);
+    EXPECT_EQ(create_ast.columns[2].m_constraint, Constraint::UNIQUE);
+    EXPECT_EQ(create_ast.columns[3].m_constraint, Constraint::DEFAULT);
+    EXPECT_EQ(create_ast.columns[4].m_constraint, Constraint::FOREIGN_KEY);
 }
 
 // after ID, missing datatype, column must have a datatype even if following by a constraint
