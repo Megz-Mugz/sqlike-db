@@ -7,7 +7,7 @@ class Schema
 
 public:
     // auto get_schema();
-    void insert_table(const AST& create_table_ast);
+    void insert_table(const CreateTableAST& create_table_ast);
     // auto alter_table();
     // auto drop_table();
 

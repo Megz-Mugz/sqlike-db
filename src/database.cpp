@@ -26,13 +26,12 @@ void Database::launch_db(){
             }
         }
     } else {
-        query = R"(
-            SELECT *, Users.weight
-            FROM Users
-            JOIN Admins
-            ON Users.id = Admins.user_id
-            WHERE id = 1;
-            )";
+        query = R"(CREATE TABLE USERS
+                    (ID INT PRIMARY KEY,
+                    NAME TEXT NOT NULL,
+                    EMAIL TEXT UNIQUE,
+                    ACTIVE BOOLEAN DEFAULT,
+                    ORG_ID INT FOREIGN KEY))";
 
         std::println("Query is: {}", query);
         

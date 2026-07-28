@@ -20,6 +20,32 @@ enum class Type{
     BOOL
 };
 
+#include <string_view>
+
+constexpr std::string_view to_string(Constraint constraint) {
+    switch (constraint) {
+        case Constraint::NONE:        return "None";
+        case Constraint::PRIMARY_KEY: return "Primary Key";
+        case Constraint::FOREIGN_KEY: return "Foreign Key";
+        case Constraint::NOT_NULL:    return "Not Null";
+        case Constraint::UNIQUE:      return "Unique";
+        case Constraint::DEFAULT:     return "Default";
+    }
+
+    exit(-1);
+}
+
+constexpr std::string_view to_string(Type type) {
+    switch (type) {
+        case Type::UNKNOWN: return "Unknown";
+        case Type::INT:     return "Int";
+        case Type::TEXT:    return "Text";
+        case Type::BOOL:    return "Bool";
+    }
+
+    exit(-1);
+}
+
 constexpr std::string NAME_NOT_SPECIFIED = "";
 constexpr std::string ALL_COLUMNS = "*";
 
