@@ -1,6 +1,17 @@
 #include <iostream>
-#include <fstream> 
 #include "schema.hpp"
+
+void Schema::clear()
+{
+    schema.clear();
+
+    schema_file.close();
+    schema_file.open("schema.sqlike", std::ios::out | std::ios::trunc);
+
+    if (!schema_file.is_open()) {
+        std::cerr << "Error clearing schema file" << std::endl;
+    }
+}
 
 /*
     This function serves to do a few things
@@ -12,21 +23,18 @@
 */
 void Schema::insert_table(const CreateTableAST& create_table_ast) 
 {
-    std::ofstream schema("schema.sqlike");
 
-    if (!schema.is_open()){
+    if (!schema_file.is_open()){
         std::cerr << "Error writing to schema file" << std::endl;
     }
 
     // write to schema here
     
-    schema << "Table Name: " << create_table_ast.table_name << " {" << "\n";
+    schema_file << "Table Name: " << create_table_ast.table_name << " {" << "\n";
     
     for (const auto [col_name, col_type, col_constraint] : create_table_ast.columns){
-        schema << "\t" << to_string(col_type) << ": " << col_name << ", " << to_string(col_constraint) << "\n";
+        schema_file << "\t" << to_string(col_type) << ": " << col_name << ", " << to_string(col_constraint) << "\n";
     }
 
-    schema << "}";
-
-    schema.close();
+    schema_file << "}\n\n";
 }

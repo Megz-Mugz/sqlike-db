@@ -6,6 +6,7 @@
 #include "lexer.hpp"
 #include "ast.hpp"
 
+// FIXME i believe one crucial bug exists, the AST's aren't getting before the start of each run
 class Parser 
 {
 public:

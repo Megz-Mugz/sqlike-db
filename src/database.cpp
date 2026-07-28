@@ -3,6 +3,8 @@
 #define PRODUCTION false
 
 void Database::launch_db(){
+    schema.clear();
+
     Parser parser;
     std::string query;
 
@@ -26,20 +28,32 @@ void Database::launch_db(){
             }
         }
     } else {
-        query = R"(CREATE TABLE USERS
-                    (ID INT PRIMARY KEY,
-                    NAME TEXT NOT NULL,
-                    EMAIL TEXT UNIQUE,
-                    ACTIVE BOOLEAN DEFAULT,
-                    ORG_ID INT FOREIGN KEY))";
+    const std::vector<std::string> queries{
+        R"(CREATE TABLE USERS
+            (ID INT PRIMARY KEY,
+             NAME TEXT NOT NULL,
+             EMAIL TEXT UNIQUE,
+             ACTIVE BOOLEAN DEFAULT,
+             ORG_ID INT FOREIGN KEY))",
 
+        R"(CREATE TABLE ORGANIZATIONS
+            (ID INT PRIMARY KEY,
+             NAME TEXT NOT NULL))",
+
+        R"(CREATE TABLE POSTS
+            (ID INT PRIMARY KEY,
+             TITLE TEXT NOT NULL,
+             AUTHOR_ID INT FOREIGN KEY))"
+    };
+
+    for (const auto& query : queries) {
         std::println("Query is: {}", query);
-        
-        if (auto ast = parser.parse_query(query))
-        {
+
+        if (auto ast = parser.parse_query(query)) {
             typechecker.typecheck_ast(*ast, schema);
         } else {
             std::println("failed :(");
         }
     }
+}
 }

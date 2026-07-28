@@ -101,6 +101,8 @@ void Parser::parse_create_column_statement(){
 */
 AST Parser::parse_create_statement(){
 
+    create_table_ast.columns.clear();
+    
     match(TokenType::CREATE_TOK);
     match(TokenType::TABLE_TOK);
 
