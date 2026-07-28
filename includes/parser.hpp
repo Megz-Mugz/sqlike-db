@@ -45,7 +45,7 @@ private:
     // functions for parsing "update" statements
     AST parse_update_statement();
     void parse_columns_to_update();
-    void parse_where_condition(AST& current_ast);
+    void parse_where_condition(WhereClause& where_clause);
 
     // functions for parsing "select" statements
     AST parse_select_statement();
@@ -54,9 +54,9 @@ private:
     void parse_column_reference();
 
     // functions for parsing "delete" statements
-    void parse_delete_statement();
+    AST parse_delete_statement();
 
     // functions for parsing "drop statements"
-    void parse_drop_statement();
+    AST parse_drop_statement();
     
 };

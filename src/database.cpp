@@ -27,12 +27,12 @@ void Database::launch_db(){
         }
     } else {
         query = R"(
-                    SELECT Users.name, weight, Users.age
-                    FROM Users
-                    JOIN Admins
-                    ON Users.id = Admins.user_id
-                    WHERE id = 1;
-                )";
+            SELECT *, Users.weight
+            FROM Users
+            JOIN Admins
+            ON Users.id = Admins.user_id
+            WHERE id = 1;
+            )";
 
         std::println("Query is: {}", query);
         

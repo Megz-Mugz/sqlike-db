@@ -43,7 +43,7 @@ AST Parser::parse_update_statement(){
 
     parse_columns_to_update();
 
-    parse_where_condition(update_statement_ast);
+    parse_where_condition(update_statement_ast.where_clause);
 
     return update_statement_ast;
 }

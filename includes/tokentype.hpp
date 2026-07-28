@@ -21,6 +21,7 @@ enum class Type{
 };
 
 constexpr std::string NAME_NOT_SPECIFIED = "";
+constexpr std::string ALL_COLUMNS = "*";
 
 enum TokenType {
     IDENTIFIER_TOK,

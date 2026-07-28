@@ -20,7 +20,7 @@ void Parser::parse_join_condition(){
         col_name = curr_lookahead.text;
         match(IDENTIFIER_TOK);
 
-        select_statement_ast.join_cols.first = std::make_pair(table_name, col_name);
+        select_statement_ast.join_cols.first = std::make_pair(col_name, table_name);
 
         match(EQUAL_TOK);
 
@@ -33,7 +33,7 @@ void Parser::parse_join_condition(){
         col_name = curr_lookahead.text;
         match(IDENTIFIER_TOK);
 
-        select_statement_ast.join_cols.second = std::make_pair(table_name, col_name);
+        select_statement_ast.join_cols.second = std::make_pair(col_name, table_name);
 
     }
 }
@@ -52,14 +52,17 @@ void Parser::parse_column_reference() {
     }
 
     if (col_name.empty()){
-        select_statement_ast.selected_cols.emplace_back("", col_or_table_name);
+        select_statement_ast.selected_cols.emplace_back(col_or_table_name, "");
     } else {
-        select_statement_ast.selected_cols.emplace_back(col_or_table_name, col_name);
+        select_statement_ast.selected_cols.emplace_back(col_name, col_or_table_name);
     }
 }
 
 void Parser::parse_select_columns() {
     if (curr_lookahead.token_type == STAR_TOK) {
+        select_statement_ast.selected_cols.emplace_back(
+            ALL_COLUMNS, ""
+        );
         match(STAR_TOK);
     } else {
         parse_column_reference();
@@ -69,6 +72,9 @@ void Parser::parse_select_columns() {
         match(COMMA_TOK);
 
         if (curr_lookahead.token_type == STAR_TOK) {
+            select_statement_ast.selected_cols.emplace_back(
+                ALL_COLUMNS, ""
+            );
             match(STAR_TOK);
         } else {
             parse_column_reference();
@@ -87,7 +93,7 @@ AST Parser::parse_select_statement(){
 
     parse_join_condition();
 
-    parse_where_condition(select_statement_ast);
+    parse_where_condition(select_statement_ast.where_clause);
 
     return select_statement_ast;
 }

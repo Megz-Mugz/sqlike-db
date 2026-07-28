@@ -41,6 +41,8 @@ struct ColumnData
 using ColumnName = std::string;
 
 using ColumnValue = std::string;
+using TypedValue = std::pair<ColumnValue, Type>;
+using WhereClause = std::unordered_map<ColumnName, TypedValue>;
 using DBRows = std::vector<ColumnData>;
 
 struct CreateTableAST : ASTBase
@@ -65,8 +67,8 @@ struct InsertStatementAST : ASTBase
 */
 struct UpdateStatementAST : ASTBase
 {
-    std::unordered_map<ColumnName, std::pair<ColumnValue, Type>> values_to_set;
-    std::unordered_map<ColumnName, std::pair<ColumnValue, Type>> where_clause;
+    std::unordered_map<ColumnName, TypedValue> values_to_set;
+    WhereClause where_clause;
 };
 
 struct SelectStatementAST : ASTBase
@@ -74,14 +76,14 @@ struct SelectStatementAST : ASTBase
     std::vector<std::pair<ColumnName, TableName>> selected_cols;
     TableName join_table;
     std::pair<std::pair<ColumnName, TableName>, std::pair<ColumnName, TableName>> join_cols; // keep outer pair
-    std::unordered_map<ColumnName, std::pair<ColumnValue, Type>> where_clause;
+    WhereClause where_clause;
 };
 
 struct DropStatementAST : ASTBase {};
 
 struct DeleteStatementAST : ASTBase 
 {
-    std::unordered_map<ColumnName, std::pair<ColumnValue, Type>> where_clause;
+    WhereClause where_clause;
 };
 
 using AST = std::variant<

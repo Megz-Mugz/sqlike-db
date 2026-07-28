@@ -4,7 +4,7 @@
 
 
 // FIXME for the time being, only support one clause, not AND/OR yet
-void Parser::parse_where_condition(AST& current_ast){
+void Parser::parse_where_condition(WhereClause& where_clause){
     if (curr_lookahead.token_type == WHERE_TOK){
         match(WHERE_TOK);
         auto column_name = curr_lookahead.text;
@@ -12,17 +12,17 @@ void Parser::parse_where_condition(AST& current_ast){
         match(EQUAL_TOK);
         switch(curr_lookahead.token_type){
             case INT_LIT_TOK:
-                current_ast.where_clause[column_name] = {curr_lookahead.text, Type::INT};
+                where_clause[column_name] = {curr_lookahead.text, Type::INT};
                 match(INT_LIT_TOK);
                 break;
 
             case STRING_LIT_TOK:
-                current_ast.where_clause[column_name] = {curr_lookahead.text, Type::TEXT};
+                where_clause[column_name] = {curr_lookahead.text, Type::TEXT};
                 match(STRING_LIT_TOK);
                 break;
 
             case BOOL_LIT_TOK:
-                current_ast.where_clause[column_name] = {curr_lookahead.text, Type::BOOL};
+                where_clause[column_name] = {curr_lookahead.text, Type::BOOL};
                 match(BOOL_LIT_TOK);
                 break;
 
@@ -85,15 +85,15 @@ std::optional<AST> Parser::parse_query(std::string_view query)
             break;
 
         case TokenType::SELECT_TOK:
-            parse_select_statement();
+            generated_ast = parse_select_statement();
             break;
 
         case TokenType::DELETE_TOK:
-            parse_delete_statement();
+            generated_ast = parse_delete_statement();
             break;
 
         case TokenType::DROP_TOK:
-            parse_drop_statement();
+            generated_ast = parse_drop_statement();
             break;
 
         default:

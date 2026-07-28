@@ -5,25 +5,41 @@
 TEST(DropTableTest, ParsesDropTable) {
     Parser parser;
 
-    EXPECT_TRUE(parser.parse_query("DROP TABLE Student;"));
+    auto parsed_query = parser.parse_query("DROP TABLE Student;");
+
+    ASSERT_TRUE(parsed_query.has_value());
+    ASSERT_TRUE(std::holds_alternative<DropStatementAST>(*parsed_query));
+    EXPECT_EQ(std::get<DropStatementAST>(*parsed_query).table_name, "Student");
 }
 
 TEST(DropTableTest, ParsesDropTableWithoutSemicolon) {
     Parser parser;
 
-    EXPECT_TRUE(parser.parse_query("DROP TABLE Student"));
+    auto parsed_query = parser.parse_query("DROP TABLE Student");
+
+    ASSERT_TRUE(parsed_query.has_value());
+    ASSERT_TRUE(std::holds_alternative<DropStatementAST>(*parsed_query));
+    EXPECT_EQ(std::get<DropStatementAST>(*parsed_query).table_name, "Student");
 }
 
 TEST(DropTableTest, ParsesDropTableIfExists) {
     Parser parser;
 
-    EXPECT_TRUE(parser.parse_query("DROP TABLE IF EXISTS Student;"));
+    auto parsed_query = parser.parse_query("DROP TABLE IF EXISTS Student;");
+
+    ASSERT_TRUE(parsed_query.has_value());
+    ASSERT_TRUE(std::holds_alternative<DropStatementAST>(*parsed_query));
+    EXPECT_EQ(std::get<DropStatementAST>(*parsed_query).table_name, "Student");
 }
 
 TEST(DropTableTest, ParsesMixedCaseKeywords) {
     Parser parser;
 
-    EXPECT_TRUE(parser.parse_query("Drop Table If Exists Student;"));
+    auto parsed_query = parser.parse_query("Drop Table If Exists Student;");
+
+    ASSERT_TRUE(parsed_query.has_value());
+    ASSERT_TRUE(std::holds_alternative<DropStatementAST>(*parsed_query));
+    EXPECT_EQ(std::get<DropStatementAST>(*parsed_query).table_name, "Student");
 }
 
 TEST(DropTableTest, DiesWhenTableKeywordIsMissing) {

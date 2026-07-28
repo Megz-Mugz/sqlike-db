@@ -27,6 +27,23 @@ bool Typechecker::typecheck_ast(const AST& ast, Schema& schema){
         auto select_statement_ast = std::get<SelectStatementAST>(ast);
 
         std::println("Valid Select Statement");
+    } 
+    
+    else if (std::holds_alternative<DropStatementAST>(ast)) {
+        auto drop_statement_ast = std::get<DropStatementAST>(ast);
+
+        std::println("Valid drop Statement");
+    }
+
+    else if (std::holds_alternative<DeleteStatementAST>(ast)) {
+        auto delete_statement_ast = std::get<DeleteStatementAST>(ast);
+
+        std::println("Valid Delete Statement");
+    
+    } else {
+        std::println("not valid, try again");
+
+        return false;
     }
 
     std::println("Query is both syntactically & semantically correct, now onto code gen!");

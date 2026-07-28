@@ -15,7 +15,7 @@ add_library(sqllike_core
     src/code_generator.cpp
     src/create_statement.cpp
     src/database.cpp
-    src/delete_statement.cpp
+    src/delete_drop_statement.cpp
     src/executor.cpp
     src/insert_statement.cpp
     src/lexer.cpp
