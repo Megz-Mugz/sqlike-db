@@ -9,19 +9,12 @@ class Schema
 public:
     // auto get_schema();
     void clear();
+
     void insert_table(const CreateTableAST& create_table_ast);
     // auto alter_table();
     // auto drop_table();
 
 private:
-
-    /* 
-    
-    table_name -> 
-        { col_name_1 -> {type, constraint} }
-        { col_name_2 -> {type, constraint} }
-        { col_name_3 -> {type, constraint} }
-    */
 
     std::ofstream schema_file;
 
@@ -29,5 +22,12 @@ private:
     using ColumnStore = std::unordered_map<ColumnName, ColumnInfo>;
     
     std::unordered_map<std::string, ColumnStore> schema;
+
+    void write_to_schema_file(const CreateTableAST& create_table_ast);
+
+    void write_to_actual_schema(const TableName table_name,
+                                const ColumnName col_name, 
+                                const Type col_type, 
+                                const Constraint col_constraint);
 
 };

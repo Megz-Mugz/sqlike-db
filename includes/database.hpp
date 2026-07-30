@@ -11,7 +11,6 @@ public:
     Parser parser; // parses & creates AST
     Schema schema; // every DB has a schema
     Typechecker typechecker;
-    CodeGenerator code_gen; // lowers to LLVM IR Builder
     Executor executor; // plans & executes query
 
 

@@ -7,8 +7,9 @@ bool Typechecker::typecheck_ast(const AST& ast, Schema& schema){
     if (std::holds_alternative<CreateTableAST>(ast)) {
         auto create_table_ast = std::get<CreateTableAST>(ast);
 
-        // TODO implement this method
         schema.insert_table(create_table_ast);
+
+        code_gen.lower_create_ast(create_table_ast);
 
         // Set a breakpoint on the next line.
         std::println("Valid Create Statement");
